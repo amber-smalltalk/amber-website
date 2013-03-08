@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{ page.title }}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="Nicolas Petton" />
+    <link rel="stylesheet" type="text/css" href='css/style.css' />
+    <link rel="stylesheet" type="text/css" href='css/syntax.css' />
+    <link type="image/x-icon" rel="shortcut icon" href="favicon.ico"/>
+    <link href='http://fonts.googleapis.com/css?family=Arapey:400italic,400' rel='stylesheet' type='text/css'>
+    <script type='text/javascript' src='amber/js/amber.js'></script>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-2246313-6']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </head>
+  <body>
+
+    <div id="wrapper">
+
+      
+      <div id="social">
+
+	<a class="FlattrButton" style="display:none;" rev="flattr;button:compact" href="http://jtalk-project.org"></a>
+	<a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="NicolasPetton">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+	<script type="text/javascript">
+	  /* <![CDATA[ */
+    (function() {
+        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+        t.parentNode.insertBefore(s, t);
+    })();
+/* ]]> */
+	</script>
+      </div>
+
+      <div id="header">
+	<img class="logo" src="images/amber.png" alt="Amber"/>
+	<div class="main">
+	  <h1>Amber</h1>
+	  <h2>A Web developer's best friend.</h2>
+	</div>
+	<div id="links">
+	  <a href="https://github.com/amber-smalltalk/amber"><img src="images/github.png" alt="Github"/></a>
+	  <a href="http://github.com/amber-smalltalk/amber/zipball/master"><img src="images/zip.png" alt="Download"/></a>
+	</div>
+	  <ul id="tabs">
+	    <li><a href="index.html">Overview</a></li>
+	    <li><a href="index.html#getstarted">Get started</a></li>
+	    <li><a href="index.html#getinvolved">Get involved</a></li>
+	    <li><a href="learn.html">Interactive tutorial</a></li>
+	    <li><a id="doc_link" href="documentation.html">Documentation</a></li>
+	    <li><a target="_blank" href="https://github.com/amber-smalltalk/amber">Source</a></li> 
+	  </ul>
+	</div>
+      </div>
+
+      <div class="teaser">
+	<div class="main">
+	  <h2>A <span class="info">new language</span> and <span class="info">live environment</span> made for the web.</h2>
+
+	  <div class="row">
+	    <p>The Amber language is deeply inspired by Smalltalk. It is designed to make client-side development faster and easier.
+	    Amber includes a live development environment with a class browser, workspace, transcript, object inspector, debugger and unit test runner.</p>
+	  </div>
+	  
+	  <div class="row">
+	    <p>Amber is written in itself, including the compiler, and compiles into efficient JavaScript, mapping one-to-one with the JS equivalent.</p>
+	    <p class="try">
+	      <span class="info">Click around. Don't worry about making a mess or breaking anything, just have fun!</span><br>
+	      <button class="huge" onClick="smalltalk.Browser._open()">Try Amber!</button>
+	    </p>
+	  </div>
+	  <div class="clear"></div>
+	</div>
+      </div>
+      
+      <div id="content">
+	<div class="main">
+	  {{ content }}
+	</div>
+      </div>
+
+      <div id="footer">
+	<div class="main">
+	  <p>Copyright © 2011-2013 <a href="http://www.nicolas-petton.fr">Nicolas Petton</a> and <a href="https://github.com/amber-smalltalk/amber/contributors">Amber contributors</a>.</p> 
+	  <p>The content of this website in licensed under <a href="http://creativecommons.org/licenses/by-nc/3.0/">CC-BY-NC 3.0</a>.</p> 
+	  <p>Amber is released under the <a href="https://github.com/amber-smalltalk/amber/blob/master/LICENSE">MIT</a> license.</p>
+	</div> 
+      </div>
+      
+      <script type='text/javascript'> loadAmber() </script>
+      
+  </body>
+</html>
