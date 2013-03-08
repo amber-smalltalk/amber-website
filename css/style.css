@@ -118,10 +118,9 @@ h3 {
 }
 
 #social {
-    position: fixed;
-    top: 6px;
+    position: absolute;
+    top: 60px;
     right: 10px;
-    z-index: 10;
 }
 
 #links a {
