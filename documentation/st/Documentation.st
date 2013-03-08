@@ -1,4 +1,4 @@
-Smalltalk current createPackage: 'Documentation' properties: #{}!
+Smalltalk current createPackage: 'Documentation'!
 Object subclass: #ChapterSelectionAnnouncement
 	instanceVariableNames: 'id'
 	package: 'Documentation'!
