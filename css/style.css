@@ -194,17 +194,7 @@ h3 {
 }
 
 #tabs li a:hover {
-    background: #faa732;
-    color: white;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    box-shadow: rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.0470588) 0px 1px 2px 0px;
-    background-image: -webkit-linear-gradient(top, rgb(251, 180, 80), rgb(248, 148, 6));
-    background-image: -moz-linear-gradient(top, rgb(251, 180, 80), rgb(248, 148, 6));
-    background-image: -o-linear-gradient(top, rgb(251, 180, 80), rgb(248, 148, 6));
-    background-image: -ms-linear-gradient(top, rgb(251, 180, 80), rgb(248, 148, 6));
-    background-image: linear-gradient(top, rgb(251, 180, 80), rgb(248, 148, 6));
-    border-color: rgba(0, 0, 0, 0.0980392);
-    border: 1px solid #faa732;
+    color: rgb(255, 177, 111);
 }
 
 .teaser {
