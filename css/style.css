@@ -199,6 +199,8 @@ h3 {
 .teaser {
     padding: 20px;
     background: white;
+    border-top: 3px solid #999;
+    border-bottom: 3px solid #999;
 }
 
 .teaser .main {
