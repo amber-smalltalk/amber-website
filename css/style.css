@@ -114,7 +114,10 @@ h3 {
 }
 
 #header #links {
-    margin-top: 50px;
+    display: none;
+    position: absolute;
+    top: 100px;
+    right: 30px;
 }
 
 #social {
@@ -197,7 +200,6 @@ h3 {
 }
 
 .teaser {
-    padding: 20px;
     background: white;
     border-top: 3px solid #999;
     border-bottom: 3px solid #999;
