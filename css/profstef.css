@@ -49,6 +49,10 @@ a#back {
     -moz-border-radius: 8px;
 }
 
+#tutorial .CodeMirror {
+    height: auto;
+}
+
 #tutorial .CodeMirror-scroll {
     overflow: auto;
     height: auto;
