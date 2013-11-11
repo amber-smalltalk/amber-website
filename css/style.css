@@ -55,6 +55,8 @@ body {
     color: #333;
 }
 
+.clear {clear: both;}
+
 a {
     color: #d27324;
     text-decoration: none;
