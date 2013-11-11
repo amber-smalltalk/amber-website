@@ -3,4 +3,4 @@
 	url = git://github.com/amber-smalltalk/amber.git
 [submodule "examples"]
 	path = examples
-	url = git@github.com:amber-smalltalk/amber-examples.git
+	url = git://github.com/amber-smalltalk/amber-examples.git
