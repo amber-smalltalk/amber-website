@@ -9,7 +9,20 @@
     <link type="image/x-icon" rel="shortcut icon" href="favicon.ico"/>
     <link href='http://fonts.googleapis.com/css?family=Arapey:400italic,400' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <script type='text/javascript' src='amber/js/amber.js'></script>
+
+    <script type='text/javascript' src='amber/support/amber.js'></script>
+    <script type='text/javascript' src='amber/support/requirejs/require.min.js'></script>
+    <script type='text/javascript'>
+    require(
+        ["amber/devel"],
+        function (smalltalk) {
+            smalltalk.defaultAmdNamespace = "amber_core";
+            smalltalk.initialize();
+        }
+    );
+    </script>
+
+
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -86,7 +99,7 @@
 
 	  <p class="try">
 	    <span class="info">Click around. Don't worry about making a mess or breaking anything, just have fun!</span><br>
-	    <button class="huge" onClick="smalltalk.Browser._open()">Try Amber in your browser!</button>
+	    <button class="huge" onClick="require('amber/helpers').popupHelios()">Try Amber in your browser!</button>
 	  </p>
 
 	</div>
@@ -105,8 +118,6 @@
 	  <p>Amber is released under the <a href="https://github.com/amber-smalltalk/amber/blob/master/LICENSE">MIT</a> license.</p>
 	</div> 
       </div>
-      
-      <script type='text/javascript'> loadAmber() </script>
       
   </body>
 </html>
