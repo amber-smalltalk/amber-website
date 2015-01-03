@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,27 +7,20 @@
     <link href='http://fonts.googleapis.com/css?family=Istok+Web' rel='stylesheet' type='text/css'> 
     <meta name="author" content="Nicolas Petton">
     <link rel="stylesheet" type="text/css" href="css/profstef.css">
-
-    <script type='text/javascript' src='amber/support/amber.js'></script>
-    <script type='text/javascript' src='amber/support/requirejs/require.min.js'></script>
-    <script type='text/javascript'>
-        require.config({
-                paths: {
-                        'amber_examples_profstef': 'examples/trysmalltalk/js',
-                        'amber_examples_profstef/_source': 'examples/trysmalltalk/st'
-                }
-        });
-        require(['amber/devel','amber_examples_profstef/TrySmalltalk'], function(smalltalk) {
-                smalltalk.defaultAmdNamespace = 'amber_examples_profstef';
-                smalltalk.initialize();
-
-		jQuery('#tutorial').empty();
-                smalltalk.TrySmalltalkWidget._new()._appendToJQuery_(jQuery('#tutorial'));
-        });
-    </script>
-
+    <script type='text/javascript' src='the.js'></script>
+  <script type='text/javascript'>
+      require(['app'], function (amber) {
+          amber.initialize({
+            //used for all new packages in IDE
+            'transport.defaultAmdNamespace': "amber-trysmalltalk"
+          });
+          jQuery('#tutorial').empty();
+          amber.globals.TrySmalltalkWidget._new()._appendToJQuery_(jQuery('#tutorial'));
+      });
+  </script>
 
   </head>
+
   <body>
 
     <div class="main">
@@ -43,6 +37,6 @@
         <p>Amber is an opensource project sponsored by <a href="http://www.objectfusion.fr/">objectfusion</a>.</p>
       </div> 
     </div>
-
   </body>
+
 </html>

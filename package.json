@@ -1,0 +1,42 @@
+{
+  "name": "trysmalltalkdemo",
+  "title": "trysmalltalkdemo",
+  "description": "A demo of the trysmalltalk",
+  "version": "0.1.0",
+  "homepage": "https://github.com/tomrake/trysmalltalk",
+  "author": {
+    "name": "Thomas Rake",
+    "email": "tom.rake@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tomrake/trysmalltalk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tomrake/trysmalltalk/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/tomrake/trysmalltalk/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "amber-dev": "^0.2.3",
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-requirejs": "^0.4.4",
+    "grunt-execute": "^0.2.2",
+    "requirejs": "^2.1.15"
+  },
+  "keywords": [
+    "Amber",
+    "Smalltalk"
+  ]
+}
