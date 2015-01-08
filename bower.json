@@ -1,0 +1,36 @@
+{
+    "name": "trysmalltalkdemo",
+    "description": "A demo of the trysmalltalk",
+    "version": "0.1.0",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "/test_runner.js",
+        "test",
+        "tests"
+    ],
+    "authors": [
+        {
+            "name": "Thomas Rake",
+            "email": "tom.rake@gmail.com"
+        }
+    ],
+    "homepage": "https://github.com/tomrake/trysmalltalk",
+    "keywords": [
+        "Amber",
+        "Smalltalk"
+    ],
+    "license": [
+        "MIT"
+    ],
+    "private": false,
+    "dependencies": {
+        "amber": "^0.13.3",
+        "trysmalltalk": "git://github.com/tomrake/trysmalltalk#0.0.2"
+    },
+    "devDependencies": {
+        "amber-ide-starter-dialog": "^0.1.0",
+        "helios": "^0.3.0"
+    }
+}

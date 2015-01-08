@@ -10,21 +10,16 @@
     <link href='http://fonts.googleapis.com/css?family=Arapey:400italic,400' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
-    <script type='text/javascript' src='amber/support/amber.js'></script>
-    <script type='text/javascript' src='amber/support/requirejs/require.min.js'></script>
+    <script type='text/javascript' src='the.js'></script>
     <script type='text/javascript'>
-    require(
-        ["amber/devel"],
-        function (smalltalk) {
-            smalltalk.defaultAmdNamespace = "amber_core";
-            smalltalk.initialize();
-        }
-    );
+      require(['app'], function (amber) {
+          amber.initialize({
+            //used for all new packages in IDE
+            'transport.defaultAmdNamespace': "amber-trysmalltalk"
+          });
+      });
     </script>
-
-
-    <script type="text/javascript">
-
+    <script type='text/javascript'>
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-2246313-6']);
       _gaq.push(['_trackPageview']);
@@ -97,7 +92,7 @@
 	  <div class="clear"></div>
 
 	  <p class="try">
-	    <button class="huge" onClick="require('amber_vm/smalltalk').Browser._open()">Try Amber in your browser!</button>
+	    <button class="huge" onClick="require('app').globals.Browser._open()">Try Amber in your browser!</button>
 	  </p>
 
 	</div>
