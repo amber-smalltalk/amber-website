@@ -1,7 +1,7 @@
 define("helios/Helios-SUnit", ["amber/boot", "helios/Helios-Core"], function($boot){
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
-var smalltalk=$core,_st=$recv,globals=$globals;
 $core.addPackage('Helios-SUnit');
+$core.packages["Helios-SUnit"].innerEval = function (expr) { return eval(expr); };
 $core.packages["Helios-SUnit"].transport = {"type":"amd","amdNamespace":"helios"};
 
 $core.addClass('HLMultiSelectToolListWidget', $globals.HLToolListWidget, [], 'Helios-SUnit');
@@ -33,7 +33,7 @@ protocol: 'testing',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self._subclassResponsibility();
 return self;
@@ -75,7 +75,7 @@ protocol: 'accessing',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$4,$3,$1;
 $2=(
@@ -114,7 +114,7 @@ protocol: 'rendering',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $receiver;
 if(($receiver = anObject) == null || $receiver.isNil){
@@ -144,7 +144,7 @@ protocol: 'actions',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self._subclassResponsibility();
 return self;
@@ -169,7 +169,7 @@ fn: function (aListItem){
 var self=this;
 var item;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$receiver;
 $1=$recv(aListItem)._get_((0));
@@ -201,7 +201,7 @@ protocol: 'actions',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=self._isSelected_(anObject);
@@ -231,7 +231,7 @@ protocol: 'actions',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self._subclassResponsibility();
 return self;
@@ -278,22 +278,31 @@ selector: "cssClassForItem:",
 protocol: 'accessing',
 fn: function (aClass){
 var self=this;
+var nonMeta;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $1;
-$1=$recv($recv(aClass)._theNonMetaClass())._heliosClass();
-return $1;
+var $1,$2,$3;
+nonMeta=$recv(aClass)._theNonMetaClass();
+$1=$recv(nonMeta)._respondsTo_("classTag");
+if($core.assert($1)){
+$2=$recv(nonMeta)._classTag();
+return $2;
+} else {
+$3=$recv(nonMeta)._heliosClass();
+return $3;
+};
+return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"cssClassForItem:",{aClass:aClass},$globals.HLSUnitClassesListWidget)});
+}, function($ctx1) {$ctx1.fill(self,"cssClassForItem:",{aClass:aClass,nonMeta:nonMeta},$globals.HLSUnitClassesListWidget)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["aClass"],
-source: "cssClassForItem: aClass\x09\x0a\x09^ aClass theNonMetaClass heliosClass",
+source: "cssClassForItem: aClass\x0a\x09| nonMeta |\x0a\x09nonMeta := aClass theNonMetaClass.\x0a\x09(nonMeta respondsTo: #classTag)\x0a\x09\x09ifTrue: [ ^ nonMeta classTag ]\x0a\x09\x09ifFalse: [ ^ nonMeta heliosClass ]",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["heliosClass", "theNonMetaClass"]
+messageSends: ["theNonMetaClass", "ifTrue:ifFalse:", "respondsTo:", "classTag", "heliosClass"]
 }),
 $globals.HLSUnitClassesListWidget);
 
@@ -304,7 +313,7 @@ protocol: 'initialization',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 self["@items"]=$recv(self["@model"])._testClasses();
@@ -330,7 +339,7 @@ protocol: 'testing',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv(self["@model"])._selectedClasses())._includes_(anObject);
@@ -355,7 +364,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@items"];
@@ -407,7 +416,7 @@ function $HLPackageUnselected(){return $globals.HLPackageUnselected||(typeof HLP
 function $HLClassSelected(){return $globals.HLClassSelected||(typeof HLClassSelected=="undefined"?nil:HLClassSelected)}
 function $HLClassUnselected(){return $globals.HLClassUnselected||(typeof HLClassUnselected=="undefined"?nil:HLClassUnselected)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=$recv(self._model())._announcer();
@@ -446,7 +455,7 @@ fn: function (){
 var self=this;
 function $ClassAdded(){return $globals.ClassAdded||(typeof ClassAdded=="undefined"?nil:ClassAdded)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv($recv(self._model())._systemAnnouncer())._on_send_to_($ClassAdded(),"onClassAdded:",self);
 return self;
@@ -470,7 +479,7 @@ protocol: 'reactions',
 fn: function (anAnnouncement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=$recv($recv(self._model())._selectedPackages())._includes_($recv($recv(anAnnouncement)._theClass())._package());
@@ -501,7 +510,7 @@ fn: function (anAnnouncement){
 var self=this;
 var listItem;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 listItem=self._findListItemFor_($recv(anAnnouncement)._item());
 $recv(listItem)._addClass_("active");
@@ -527,7 +536,7 @@ fn: function (anAnnouncement){
 var self=this;
 var listItem;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 listItem=self._findListItemFor_($recv(anAnnouncement)._item());
 $recv(listItem)._removeClass_("active");
@@ -552,7 +561,7 @@ protocol: 'reactions',
 fn: function (anAnnouncement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 self._initializeItems();
@@ -578,7 +587,7 @@ protocol: 'reactions',
 fn: function (anAnnouncement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 self._initializeItems();
@@ -604,7 +613,7 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=$recv(html)._button();
@@ -640,7 +649,7 @@ protocol: 'rendering',
 fn: function (aClass,html){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(html)._with_($recv(aClass)._name());
 return self;
@@ -664,7 +673,7 @@ protocol: 'actions',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self["@model"])._selectClass_(anObject);
 return self;
@@ -688,7 +697,7 @@ protocol: 'actions',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self["@model"])._unselectClass_(anObject);
 return self;
@@ -736,7 +745,7 @@ protocol: 'accessing',
 fn: function (anItem){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1;
 $2=$recv(anItem)._isDirty();
@@ -766,7 +775,7 @@ protocol: 'initialization',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1;
 self["@items"]=$recv($recv(self["@model"])._testPackages())._sort_((function(a,b){
@@ -804,7 +813,7 @@ protocol: 'testing',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv(self["@model"])._selectedPackages())._includes_(anObject);
@@ -829,7 +838,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@items"];
@@ -879,7 +888,7 @@ var self=this;
 function $HLPackageSelected(){return $globals.HLPackageSelected||(typeof HLPackageSelected=="undefined"?nil:HLPackageSelected)}
 function $HLPackageUnselected(){return $globals.HLPackageUnselected||(typeof HLPackageUnselected=="undefined"?nil:HLPackageUnselected)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=$recv(self._model())._announcer();
@@ -910,7 +919,7 @@ fn: function (){
 var self=this;
 function $ClassAdded(){return $globals.ClassAdded||(typeof ClassAdded=="undefined"?nil:ClassAdded)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv($recv(self._model())._systemAnnouncer())._on_send_to_($ClassAdded(),"onClassAdded:",self);
 return self;
@@ -934,7 +943,7 @@ protocol: 'reactions',
 fn: function (anAnnouncement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $4,$6,$5,$3,$2,$1,$7;
 $4=self._items();
@@ -984,7 +993,7 @@ fn: function (anAnnouncement){
 var self=this;
 var listItem;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 listItem=self._findListItemFor_($recv(anAnnouncement)._item());
 $recv(listItem)._addClass_("active");
@@ -1010,7 +1019,7 @@ fn: function (anAnnouncement){
 var self=this;
 var listItem;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 listItem=self._findListItemFor_($recv(anAnnouncement)._item());
 $recv(listItem)._removeClass_("active");
@@ -1035,7 +1044,7 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$3,$2,$4,$5;
 $1=$recv(html)._button();
@@ -1099,7 +1108,7 @@ protocol: 'rendering',
 fn: function (aPackage,html){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(html)._with_($recv(aPackage)._name());
 return self;
@@ -1123,7 +1132,7 @@ protocol: 'actions',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self["@model"])._selectPackage_(anObject);
 return self;
@@ -1147,7 +1156,7 @@ protocol: 'actions',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self["@model"])._unselectPackage_(anObject);
 return self;
@@ -1178,7 +1187,7 @@ fn: function (){
 var self=this;
 function $HLSUnitClassesListWidget(){return $globals.HLSUnitClassesListWidget||(typeof HLSUnitClassesListWidget=="undefined"?nil:HLSUnitClassesListWidget)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@classesListWidget"];
@@ -1211,7 +1220,7 @@ fn: function (){
 var self=this;
 function $HLSUnitErrorsListWidget(){return $globals.HLSUnitErrorsListWidget||(typeof HLSUnitErrorsListWidget=="undefined"?nil:HLSUnitErrorsListWidget)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@errorsWidget"];
@@ -1243,7 +1252,7 @@ fn: function (){
 var self=this;
 function $HLSUnitFailuresListWidget(){return $globals.HLSUnitFailuresListWidget||(typeof HLSUnitFailuresListWidget=="undefined"?nil:HLSUnitFailuresListWidget)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@failuresWidget"];
@@ -1276,7 +1285,7 @@ fn: function (){
 var self=this;
 function $HLSUnitModel(){return $globals.HLSUnitModel||(typeof HLSUnitModel=="undefined"?nil:HLSUnitModel)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@model"];
@@ -1308,7 +1317,7 @@ fn: function (){
 var self=this;
 function $HLSUnitPackagesListWidget(){return $globals.HLSUnitPackagesListWidget||(typeof HLSUnitPackagesListWidget=="undefined"?nil:HLSUnitPackagesListWidget)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@packagesListWidget"];
@@ -1341,7 +1350,7 @@ fn: function (aBindingGroup){
 var self=this;
 function $HLToolCommand(){return $globals.HLToolCommand||(typeof HLToolCommand=="undefined"?nil:HLToolCommand)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv($HLToolCommand())._registerConcreteClassesOn_for_(aBindingGroup,self._model());
 return self;
@@ -1368,7 +1377,7 @@ var resultSection;
 function $HLContainer(){return $globals.HLContainer||(typeof HLContainer=="undefined"?nil:HLContainer)}
 function $HLVerticalSplitter(){return $globals.HLVerticalSplitter||(typeof HLVerticalSplitter=="undefined"?nil:HLVerticalSplitter)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $4,$3,$5,$2,$1;
 $4=self._packagesListWidget();
@@ -1419,7 +1428,7 @@ fn: function (){
 var self=this;
 function $HLHorizontalSplitter(){return $globals.HLHorizontalSplitter||(typeof HLHorizontalSplitter=="undefined"?nil:HLHorizontalSplitter)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($HLHorizontalSplitter())._with_with_(self._resultWidget(),$recv($HLHorizontalSplitter())._with_with_(self._failuresWidget(),self._errorsWidget()));
@@ -1448,7 +1457,7 @@ fn: function (){
 var self=this;
 function $HLSUnitResults(){return $globals.HLSUnitResults||(typeof HLSUnitResults=="undefined"?nil:HLSUnitResults)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$3,$4,$1,$receiver;
 $2=self["@resultWidget"];
@@ -1482,7 +1491,7 @@ protocol: 'actions',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 (
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -1623,7 +1632,7 @@ protocol: 'actions',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $recv(self._testClasses())._do_((function(each){
@@ -1661,7 +1670,7 @@ protocol: 'actions',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $recv(self._testPackages())._do_((function(each){
@@ -1699,7 +1708,7 @@ protocol: 'reacting',
 fn: function (announcement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._announcer())._announce_(announcement);
 return self;
@@ -1726,7 +1735,7 @@ var worker;
 function $TestSuiteRunner(){return $globals.TestSuiteRunner||(typeof TestSuiteRunner=="undefined"?nil:TestSuiteRunner)}
 function $HLRunTests(){return $globals.HLRunTests||(typeof HLRunTests=="undefined"?nil:HLRunTests)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 worker=$recv($TestSuiteRunner())._on_(self._testCases());
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -1757,7 +1766,7 @@ protocol: 'actions',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._testClasses())._do_((function(each){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -1789,7 +1798,7 @@ protocol: 'actions',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._testPackages())._do_((function(each){
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -1822,7 +1831,7 @@ fn: function (aClass){
 var self=this;
 function $HLClassSelected(){return $globals.HLClassSelected||(typeof HLClassSelected=="undefined"?nil:HLClassSelected)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._unfilteredSelectedClasses())._add_(aClass);
 $recv(self._announcer())._announce_($recv($HLClassSelected())._on_(aClass));
@@ -1848,7 +1857,7 @@ fn: function (aPackage){
 var self=this;
 function $HLPackageSelected(){return $globals.HLPackageSelected||(typeof HLPackageSelected=="undefined"?nil:HLPackageSelected)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._selectedPackages())._add_(aPackage);
 $recv(self._announcer())._announce_($recv($HLPackageSelected())._on_(aPackage));
@@ -1873,7 +1882,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv(self._unfilteredSelectedClasses())._select_((function(each){
@@ -1907,7 +1916,7 @@ fn: function (){
 var self=this;
 function $Set(){return $globals.Set||(typeof Set=="undefined"?nil:Set)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@selectedPackages"];
@@ -1939,7 +1948,7 @@ fn: function (aTestSuiteRunner){
 var self=this;
 function $ResultAnnouncement(){return $globals.ResultAnnouncement||(typeof ResultAnnouncement=="undefined"?nil:ResultAnnouncement)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2,$receiver;
 $1=self["@currentSuite"];
@@ -1976,7 +1985,7 @@ fn: function (){
 var self=this;
 var testCases;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 testCases=[];
@@ -2013,7 +2022,7 @@ var self=this;
 var stream;
 function $Array(){return $globals.Array||(typeof Array=="undefined"?nil:Array)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 stream=$recv($recv($Array())._new())._writeStream();
@@ -2056,7 +2065,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv(self._environment())._packages())._select_((function(each){
@@ -2090,7 +2099,7 @@ fn: function (){
 var self=this;
 function $TestResult(){return $globals.TestResult||(typeof TestResult=="undefined"?nil:TestResult)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@testResult"];
@@ -2122,7 +2131,7 @@ fn: function (){
 var self=this;
 function $Set(){return $globals.Set||(typeof Set=="undefined"?nil:Set)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@selectedClasses"];
@@ -2154,7 +2163,7 @@ fn: function (aClass){
 var self=this;
 function $HLClassUnselected(){return $globals.HLClassUnselected||(typeof HLClassUnselected=="undefined"?nil:HLClassUnselected)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $early={};
 try {
@@ -2187,7 +2196,7 @@ fn: function (aPackage){
 var self=this;
 function $HLPackageUnselected(){return $globals.HLPackageUnselected||(typeof HLPackageUnselected=="undefined"?nil:HLPackageUnselected)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $early={};
 try {
@@ -2226,7 +2235,7 @@ fn: function (){
 var self=this;
 function $ResultAnnouncement(){return $globals.ResultAnnouncement||(typeof ResultAnnouncement=="undefined"?nil:ResultAnnouncement)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv($recv(self._model())._announcer())._on_send_to_($ResultAnnouncement(),"onResultAnnouncement:",self);
 return self;
@@ -2250,7 +2259,7 @@ protocol: 'reacting',
 fn: function (announcement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self._refresh();
 return self;
@@ -2274,7 +2283,7 @@ protocol: 'actions',
 fn: function (aTestCase){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(aTestCase)._runCase();
 return self;
@@ -2298,7 +2307,7 @@ protocol: 'rendering',
 fn: function (anObject,html){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv($recv($recv(anObject)._class())._name()).__comma(" >> ")).__comma($recv(anObject)._selector());
@@ -2327,7 +2336,7 @@ protocol: 'rendering',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self._performFailure_(anObject);
 return self;
@@ -2357,7 +2366,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv(self._model())._testResult())._errors();
@@ -2406,7 +2415,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv(self._model())._testResult())._failures();
@@ -2456,7 +2465,7 @@ fn: function (){
 var self=this;
 function $TestResult(){return $globals.TestResult||(typeof TestResult=="undefined"?nil:TestResult)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1,$receiver;
 $2=self["@model"];
@@ -2487,7 +2496,7 @@ protocol: 'accessing',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self["@model"]=anObject;
 self._observeModel();
@@ -2513,7 +2522,7 @@ fn: function (){
 var self=this;
 function $ResultAnnouncement(){return $globals.ResultAnnouncement||(typeof ResultAnnouncement=="undefined"?nil:ResultAnnouncement)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv($recv(self._model())._announcer())._on_send_to_($ResultAnnouncement(),"onResultAnnouncement:",self);
 return self;
@@ -2537,7 +2546,7 @@ protocol: 'reacting',
 fn: function (announcement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self._refresh();
 return self;
@@ -2561,7 +2570,7 @@ protocol: 'printing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv($recv($recv(self._result())._errors())._size())._asString()).__comma(" errors, ");
@@ -2586,7 +2595,7 @@ protocol: 'printing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv($recv($recv(self._result())._failures())._size())._asString()).__comma(" failures");
@@ -2611,7 +2620,7 @@ protocol: 'printing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $6,$5,$9,$8,$7,$4,$3,$2,$1;
 $6=self._result();
@@ -2656,7 +2665,7 @@ protocol: 'printing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv($recv(self._result())._total())._asString()).__comma(" runs, ");
@@ -2681,7 +2690,7 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=$recv(html)._div();
@@ -2719,7 +2728,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv(self._model())._testResult();
@@ -2744,7 +2753,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1="sunit status ".__comma($recv(self._result())._status());
@@ -2769,7 +2778,7 @@ protocol: 'accessing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$1;
 $2=$recv($recv(self._printTotal()).__comma(self._printPasses())).__comma(self._printErrors());
@@ -2801,7 +2810,7 @@ protocol: 'actions',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 (
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -2859,7 +2868,7 @@ protocol: 'accessing',
 fn: function (anObject){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 self["@model"]=anObject;
 self._observeModel();
@@ -2886,7 +2895,7 @@ var self=this;
 function $HLRunTests(){return $globals.HLRunTests||(typeof HLRunTests=="undefined"?nil:HLRunTests)}
 function $ResultAnnouncement(){return $globals.ResultAnnouncement||(typeof ResultAnnouncement=="undefined"?nil:ResultAnnouncement)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=$recv(self._model())._announcer();
@@ -2916,7 +2925,7 @@ protocol: 'reacting',
 fn: function (announcement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$7,$6,$5,$4,$3,$2;
 $recv((function(){
@@ -2962,7 +2971,7 @@ protocol: 'reacting',
 fn: function (announcement){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2;
 $1=self._progressBarWidget();
@@ -2990,7 +2999,7 @@ fn: function (){
 var self=this;
 function $HLProgressBarWidget(){return $globals.HLProgressBarWidget||(typeof HLProgressBarWidget=="undefined"?nil:HLProgressBarWidget)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$3,$4,$1,$receiver;
 $2=self["@progressBarWidget"];
@@ -3024,7 +3033,7 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $recv(html)._with_(self._resultStatusWidget());
@@ -3054,7 +3063,7 @@ fn: function (){
 var self=this;
 function $HLSUnitResultStatus(){return $globals.HLSUnitResultStatus||(typeof HLSUnitResultStatus=="undefined"?nil:HLSUnitResultStatus)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$3,$4,$1,$receiver;
 $2=self["@resultStatusWidget"];
@@ -3088,7 +3097,7 @@ protocol: 'actions',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 (
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);

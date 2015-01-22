@@ -1,7 +1,7 @@
 define("amber_core/Kernel-Collections", ["amber/boot", "amber_core/Kernel-Objects"], function($boot){
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
-var smalltalk=$core,_st=$recv,globals=$globals;
 $core.addPackage('Kernel-Collections');
+$core.packages["Kernel-Collections"].innerEval = function (expr) { return eval(expr); };
 $core.packages["Kernel-Collections"].transport = {"type":"amd","amdNamespace":"amber_core"};
 
 $core.addClass('Association', $globals.Object, ['key', 'value'], 'Kernel-Collections');
@@ -779,32 +779,6 @@ source: "collect: aBlock\x0a\x09| stream |\x0a\x09stream := self class new write
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: ["writeStream", "new", "class", "do:", "nextPut:", "value:", "contents"]
-}),
-$globals.Collection);
-
-$core.addMethod(
-$core.method({
-selector: "contains:",
-protocol: 'testing',
-fn: function (aBlock){
-var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-var $1;
-self._deprecatedAPI();
-$1=self._anySatisfy_(aBlock);
-return $1;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"contains:",{aBlock:aBlock},$globals.Collection)});
-//>>excludeEnd("ctx");
-},
-//>>excludeStart("ide", pragmas.excludeIdeData);
-args: ["aBlock"],
-source: "contains: aBlock\x0a\x09self deprecatedAPI.\x0a\x0a\x09^ self anySatisfy: aBlock",
-referencedClasses: [],
-//>>excludeEnd("ide");
-messageSends: ["deprecatedAPI", "anySatisfy:"]
 }),
 $globals.Collection);
 
@@ -1675,8 +1649,8 @@ $globals.Collection);
 
 $core.addMethod(
 $core.method({
-selector: "heliosClass",
-protocol: 'helios',
+selector: "classTag",
+protocol: 'accessing',
 fn: function (){
 var self=this;
 return "collection";
@@ -1684,7 +1658,7 @@ return "collection";
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "heliosClass\x0a\x09^ 'collection'",
+source: "classTag\x0a\x09\x22Returns a tag or general category for this class.\x0a\x09Typically used to help tools do some reflection.\x0a\x09Helios, for example, uses this to decide what icon the class should display.\x22\x0a\x09\x0a\x09^ 'collection'",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
@@ -6304,32 +6278,6 @@ source: "asRegexp\x0a\x09^ RegularExpression fromString: self",
 referencedClasses: ["RegularExpression"],
 //>>excludeEnd("ide");
 messageSends: ["fromString:"]
-}),
-$globals.String);
-
-$core.addMethod(
-$core.method({
-selector: "asSelector",
-protocol: 'converting',
-fn: function (){
-var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-var $1;
-self._deprecatedAPI_("Use #asJavaScriptMethodName");
-$1=self._asJavaScriptMethodName();
-return $1;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"asSelector",{},$globals.String)});
-//>>excludeEnd("ctx");
-},
-//>>excludeStart("ide", pragmas.excludeIdeData);
-args: [],
-source: "asSelector\x0a\x09self deprecatedAPI: 'Use #asJavaScriptMethodName'.\x0a\x09^ self asJavaScriptMethodName",
-referencedClasses: [],
-//>>excludeEnd("ide");
-messageSends: ["deprecatedAPI:", "asJavaScriptMethodName"]
 }),
 $globals.String);
 

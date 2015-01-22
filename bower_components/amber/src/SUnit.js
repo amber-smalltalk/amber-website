@@ -1,7 +1,7 @@
 define("amber_core/SUnit", ["amber/boot", "amber_core/Kernel-Objects", "amber_core/Kernel-Exceptions", "amber_core/Kernel-Infrastructure", "amber_core/Kernel-Classes"], function($boot){
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
-var smalltalk=$core,_st=$recv,globals=$globals;
 $core.addPackage('SUnit');
+$core.packages["SUnit"].innerEval = function (expr) { return eval(expr); };
 $core.packages["SUnit"].transport = {"type":"amd","amdNamespace":"amber_core"};
 
 $core.addClass('ResultAnnouncement', $globals.Object, ['result'], 'SUnit');
@@ -658,8 +658,8 @@ $globals.TestCase.klass);
 
 $core.addMethod(
 $core.method({
-selector: "heliosClass",
-protocol: 'helios',
+selector: "classTag",
+protocol: 'accessing',
 fn: function (){
 var self=this;
 return "test";
@@ -667,7 +667,7 @@ return "test";
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "heliosClass\x0a\x09^ 'test'",
+source: "classTag\x0a\x09\x22Returns a tag or general category for this class.\x0a\x09Typically used to help tools do some reflection.\x0a\x09Helios, for example, uses this to decide what icon the class should display.\x22\x0a\x09\x0a\x09^ 'test'",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []

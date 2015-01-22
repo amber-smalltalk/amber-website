@@ -9,12 +9,13 @@
     <link rel="stylesheet" type="text/css" href="css/profstef.css">
     <script type='text/javascript' src='the.js'></script>
   <script type='text/javascript'>
-      require(['app'], function (amber) {
+      require(['app','jquery'], function (amber,$) {
           amber.initialize({
             //used for all new packages in IDE
             'transport.defaultAmdNamespace': "amber-trysmalltalk"
           });
-          jQuery('#tutorial').empty();
+          $('#tutorial').empty();
+          $('#version').text('v' + amber.globals.Smalltalk._version());
           amber.globals.TrySmalltalkWidget._new()._appendToJQuery_(jQuery('#tutorial'));
       });
   </script>
@@ -25,6 +26,7 @@
 
     <div class="main">
       <a id="back" href="/"> &larr; back to amber-lang.net </a>
+      <div>Amber <span id="version" style="color:red"></span></div>
       <img src="images/profstef.png"/>
       <h1>Hey there! Got 5 minutes? I'm prof Stef and I want to teach you Smalltalk. I promise, it won't take long!</h1> 
       
@@ -33,7 +35,7 @@
     
     <div id="footer">
       <div class="main">
-        <p>Copyright &copy; 2011 <a href="http://www.nicolas-petton.fr/">Nicolas Petton</a>. The content of this website in licensed under <a href="http://creativecommons.org/licenses/by-nc/3.0/">CC-BY-NC 3.0</a>.</p>
+        <p>Copyright &copy; 2011-2015 <a href="http://www.nicolas-petton.fr/">Nicolas Petton</a>. The content of this website in licensed under <a href="http://creativecommons.org/licenses/by-nc/3.0/">CC-BY-NC 3.0</a>.</p>
         <p>Amber is an opensource project sponsored by <a href="http://www.objectfusion.fr/">objectfusion</a>.</p>
       </div> 
     </div>

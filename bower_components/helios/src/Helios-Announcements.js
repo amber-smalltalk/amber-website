@@ -1,7 +1,7 @@
 define("helios/Helios-Announcements", ["amber/boot", "amber_core/Kernel-Objects"], function($boot){
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
-var smalltalk=$core,_st=$recv,globals=$globals;
 $core.addPackage('Helios-Announcements');
+$core.packages["Helios-Announcements"].innerEval = function (expr) { return eval(expr); };
 $core.packages["Helios-Announcements"].transport = {"type":"amd","amdNamespace":"helios"};
 
 $core.addClass('HLAboutToChange', $globals.Object, ['actionBlock'], 'Helios-Announcements');
@@ -124,7 +124,7 @@ protocol: 'actions',
 fn: function (aCodeModel){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$3,$1;
 $2=self._new();
@@ -575,7 +575,7 @@ protocol: 'instance creation',
 fn: function (anItem){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$3,$1;
 $2=self._new();
@@ -660,7 +660,7 @@ protocol: 'instance creation',
 fn: function (anItem){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$3,$1;
 $2=self._new();
@@ -736,7 +736,7 @@ protocol: 'instance creation',
 fn: function (aTestSuiteRunner){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $2,$3,$1;
 $2=self._new();

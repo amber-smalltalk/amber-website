@@ -10,7 +10,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-execute');
 
   grunt.registerTask('default', ['peg', 'amberc:all']);
-  grunt.registerTask('amberc:all', ['amberc:amber', 'amberc:cli']);
+  grunt.registerTask('amberc:all', ['amberc:amber', 'amberc:attic', 'amberc:cli']);
   grunt.registerTask('test', ['amberc:test_runner', 'execute:test_runner', 'clean:test_runner']);
   grunt.registerTask('devel', ['amdconfig:amber']);
 
@@ -45,9 +45,8 @@ module.exports = function(grunt) {
               'src/Kernel-Infrastructure.st', 'src/Kernel-Exceptions.st', 'src/Kernel-Transcript.st', 'src/Kernel-Announcements.st',
               'src/Kernel-ImportExport.st', 'src/Compiler-Exceptions.st', 'src/Compiler-Core.st', 'src/Compiler-AST.st',
               'src/Compiler-IR.st', 'src/Compiler-Inlining.st', 'src/Compiler-Semantic.st', 'src/Compiler-Interpreter.st',
-              'src/Web.st', 'src/SUnit.st', 'src/IDE.st',
-              'src/Kernel-Tests.st', 'src/Compiler-Tests.st', 'src/SUnit-Tests.st',
-              'src/Benchfib.st', 'src/Examples.st'
+              'src/Web.st', 'src/SUnit.st',
+              'src/Kernel-Tests.st', 'src/Compiler-Tests.st', 'src/SUnit-Tests.st'
               ],
         jsGlobals: ['navigator']
       },

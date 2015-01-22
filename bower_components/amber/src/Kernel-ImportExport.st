@@ -44,12 +44,6 @@ extensionProtocolsOfPackage: aPackage
 
 !AbstractExporter methodsFor: 'convenience'!
 
-chunkEscape: aString
-	"Replace all occurrences of !! with !!!! and trim at both ends."
-
-	^ (aString replace: '!!' with: '!!!!') trimBoth
-!
-
 classNameFor: aClass
 	^ aClass isMetaclass
 		ifTrue: [ aClass instanceClass name, ' class' ]
@@ -117,6 +111,14 @@ ownMethodProtocolsOfClass: aClass
 		ExportMethodProtocol name: each theClass: aClass ]
 ! !
 
+!ChunkExporter methodsFor: 'convenience'!
+
+chunkEscape: aString
+	"Replace all occurrences of !! with !!!! and trim at both ends."
+
+	^ (aString replace: '!!' with: '!!!!') trimBoth
+! !
+
 !ChunkExporter methodsFor: 'output'!
 
 exportCategoryEpilogueOf: aCategory on: aStream
@@ -170,7 +172,9 @@ exportMethod: aMethod on: aStream
 
 exportPackage: aPackage on: aStream
 
-	self exportPackageDefinitionOf: aPackage on: aStream.
+	self
+		exportPackageDefinitionOf: aPackage on: aStream;
+		exportPackageImportsOf: aPackage on: aStream.
 	
 	aPackage sortedClasses do: [ :each |
 		self exportDefinitionOf: each on: aStream.
@@ -194,6 +198,17 @@ exportPackageDefinitionOf: aPackage on: aStream
 	aStream
 		nextPutAll: 'Smalltalk createPackage: ''', aPackage name, '''!!';
 		lf
+!
+
+exportPackageImportsOf: aPackage on: aStream
+	aPackage imports ifNotEmpty: [ :imports |
+		aStream
+			nextPutAll: '(Smalltalk packageAt: ''';
+			nextPutAll: aPackage name;
+			nextPutAll: ''') imports: ';
+			nextPutAll: aPackage importsDefinition;
+			nextPutAll: '!!';
+			lf ]
 !
 
 exportProtocol: aProtocol on: aStream
@@ -321,6 +336,8 @@ exportPackage: aPackage on: aStream
 	self 
 		exportPackagePrologueOf: aPackage on: aStream;
 		exportPackageDefinitionOf: aPackage on: aStream;
+		exportPackageContextOf: aPackage on: aStream;
+		exportPackageImportsOf: aPackage on: aStream;
 		exportPackageTransportOf: aPackage on: aStream.
 	
 	aPackage sortedClasses do: [ :each |
@@ -338,6 +355,16 @@ exportPackage: aPackage on: aStream
 	self exportPackageEpilogueOf: aPackage on: aStream
 !
 
+exportPackageContextOf: aPackage on: aStream
+	aStream
+		nextPutAll: '$core.packages[';
+		nextPutAll: aPackage name asJavascript;
+		nextPutAll: '].innerEval = ';
+		nextPutAll: 'function (expr) { return eval(expr); }';
+		nextPutAll: ';';
+		lf
+!
+
 exportPackageDefinitionOf: aPackage on: aStream
 	aStream
 		nextPutAll: '$core.addPackage(';
@@ -346,15 +373,22 @@ exportPackageDefinitionOf: aPackage on: aStream
 !
 
 exportPackageEpilogueOf: aPackage on: aStream
-	aStream
-		nextPutAll: '})(global_smalltalk,global_nil,global__st);';
-		lf
+	self subclassResponsibility
+!
+
+exportPackageImportsOf: aPackage on: aStream
+	aPackage importsAsJson ifNotEmpty: [ :imports |
+		aStream
+			nextPutAll: '$core.packages[';
+			nextPutAll: aPackage name asJavascript;
+			nextPutAll: '].imports = ';
+			nextPutAll: imports asJavascript;
+			nextPutAll: ';';
+			lf ]
 !
 
 exportPackagePrologueOf: aPackage on: aStream
-	aStream
-		nextPutAll: '(function(smalltalk,nil,_st){';
-		lf
+	self subclassResponsibility
 !
 
 exportPackageTransportOf: aPackage on: aStream
@@ -382,18 +416,27 @@ exportPackageEpilogueOf: aPackage on: aStream
 !
 
 exportPackagePrologueOf: aPackage on: aStream
+	| namedImports anonImports importVarNames loadDependencies |
+	namedImports := #().
+	anonImports := #().
+	importVarNames := #().
+	aPackage imports do: [ :each | each isString
+		ifTrue: [ anonImports add: each ]
+		ifFalse: [ namedImports add: each value.
+			importVarNames add: each key ]].
+	loadDependencies := self amdNamesOfPackages: aPackage loadDependencies.
 	aStream
 		nextPutAll: 'define("';
 		nextPutAll: (self amdNamespaceOfPackage: aPackage);
-		nextPutAll: '/';
+		nextPutAll: '/'; 
 		nextPutAll: aPackage name;
 		nextPutAll: '", ';
-		nextPutAll: (#('amber/boot'), (self amdNamesOfPackages: aPackage loadDependencies)) asJavascript;
-		nextPutAll: ', function($boot){';
+		nextPutAll: (#('amber/boot'), namedImports, anonImports, loadDependencies) asJavascript;
+		nextPutAll: ', function(';
+		nextPutAll: (#('$boot'), importVarNames join: ',');
+		nextPutAll: '){';
 		lf;
 		nextPutAll: 'var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;';
-		lf;
-		nextPutAll: 'var smalltalk=$core,_st=$recv,globals=$globals;';
 		lf
 ! !
 
@@ -582,7 +625,7 @@ contentsFor: aPackage
 !
 
 exporterClass
-	^ Exporter
+	self subclassResponsibility
 ! !
 
 !PackageHandler methodsFor: 'committing'!
@@ -811,8 +854,9 @@ type
 
 initialize
 	super initialize.
-	registry := #{}.
-	self register
+	self == PackageTransport
+		ifTrue: [ registry := #{} ]
+		ifFalse: [ self register ]
 ! !
 
 !PackageTransport class methodsFor: 'instance creation'!

@@ -174,9 +174,6 @@ selectedClass: aClass
 		ifTrue: [ ^ self ].
 	
 	self withChangesDo: [
-		selectedClass = aClass ifTrue: [ 
-			self selectedProtocol: nil ].
-    
 		aClass 
    			ifNil: [ selectedClass := nil ]
     		ifNotNil: [
@@ -184,7 +181,8 @@ selectedClass: aClass
 				self showInstance 
    					ifTrue: [ selectedClass := aClass theNonMetaClass ]
      				ifFalse: [ selectedClass := aClass theMetaClass ] ].
-		self selectedProtocol: nil.
+		selectedProtocol := nil.
+		self selectedProtocol: self allProtocol.
 		self announcer announce: (HLClassSelected on: self selectedClass) ]
 !
 
@@ -248,7 +246,7 @@ addInstVarNamed: aString
 save: aString
 	self announcer announce: HLSourceCodeSaved new.
 	
-	(self shouldCompileClassDefinition: aString)
+	(self shouldCompileDefinition: aString)
 		ifTrue: [ self compileClassDefinition: aString ]
 		ifFalse: [ self compileMethod: aString ]
 !
@@ -270,7 +268,8 @@ copyClassTo: aClassName
 	self withChangesDo: [ 
 		self environment 
 			copyClass: self selectedClass theNonMetaClass
-			to: aClassName ]
+			to: aClassName.
+		self selectedClass: (self environment classNamed: aClassName) ]
 !
 
 moveClassToPackage: aPackageName
@@ -462,7 +461,7 @@ isToolModel
 	^ true
 !
 
-shouldCompileClassDefinition: aString
+shouldCompileDefinition: aString
 	^ self selectedClass isNil or: [
 		aString match: '^\s*[A-Z]' ]
 ! !
@@ -1420,7 +1419,10 @@ current
 setup
 	self current 
 		setup;
-		appendToJQuery: 'body' asJQuery
+		appendToJQuery: 'body' asJQuery.
+	
+	('helios.confirmOnExit' settingValueIfAbsent: true) ifTrue: [
+		window onbeforeunload: [ 'Do you want to close Amber? All uncommitted changes will be lost.' ] ]
 ! !
 
 !HLManager class methodsFor: 'instance creation'!

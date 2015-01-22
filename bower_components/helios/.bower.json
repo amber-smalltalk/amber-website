@@ -1,6 +1,6 @@
 {
   "name": "helios",
-  "version": "0.3.1",
+  "version": "0.3.4",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -14,14 +14,15 @@
     "jquery-ui": ">=1.9.2",
     "bootstrap2.3.2": "^2.3.2",
     "codemirror": "^4.7.0",
-    "showdown": "^0.3.1"
+    "showdown": "^0.3.1",
+    "require-css": "^0.1.2"
   },
   "homepage": "https://github.com/amber-smalltalk/helios",
-  "_release": "0.3.1",
+  "_release": "0.3.4",
   "_resolution": {
     "type": "version",
-    "tag": "0.3.1",
-    "commit": "0fffd69037a55bb5551a0f9d428ea7c1204a0b36"
+    "tag": "0.3.4",
+    "commit": "e3364bfbbd2bacaca34602884dd04507ef2bf291"
   },
   "_source": "git://github.com/amber-smalltalk/helios.git",
   "_target": "^0.3.0",

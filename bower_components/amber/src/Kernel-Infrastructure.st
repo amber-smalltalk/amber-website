@@ -526,7 +526,7 @@ Organizer subclass: #PackageOrganizer
 I am an organizer specific to packages. I hold classes categorization information.!
 
 Object subclass: #Package
-	instanceVariableNames: 'transport dirty'
+	instanceVariableNames: 'transport imports dirty'
 	package: 'Kernel-Infrastructure'!
 !Package commentStamp!
 I am similar to a "class category" typically found in other Smalltalks like Pharo or Squeak. Amber does not have class categories anymore, it had in the beginning but now each class in the system knows which package it belongs to.
@@ -583,11 +583,36 @@ definition
 		stream 
 			nextPutAll: self class name;
 			nextPutAll: String lf, String tab;
-			nextPutAll: ' named: ';
+			nextPutAll: 'named: ';
 			nextPutAll: '''', self name, '''';
 			nextPutAll: String lf, String tab;
-			nextPutAll:  ' transport: (';
+			nextPutAll: 'imports: ';
+			nextPutAll: self importsDefinition;
+			nextPutAll: String lf, String tab;
+			nextPutAll: 'transport: (';
 			nextPutAll: self transport definition, ')' ]
+!
+
+imports
+	^ imports ifNil: [
+		| parsed |
+		parsed := self importsFromJson: self basicImports.
+		self imports: parsed.
+		imports ]
+!
+
+imports: anArray
+	self validateImports: anArray.
+	imports := anArray asSet
+!
+
+importsDefinition
+	^ String streamContents: [ :stream |
+		stream nextPutAll: '{'.
+		self sortedImportsAsArray
+			do: [ :each | stream nextPutAll: each importsString ]
+			separatedBy: [ stream nextPutAll: '. ' ].
+		stream nextPutAll: '}' ]
 !
 
 name
@@ -633,6 +658,29 @@ sortedClasses
 	^ self class sortedClasses: self classes
 ! !
 
+!Package methodsFor: 'converting'!
+
+importsAsJson
+
+	^ self sortedImportsAsArray collect: [ :each |
+		each isString
+			ifTrue: [ each ]
+			ifFalse: [ each key, '=', each value ]]
+!
+
+importsFromJson: anArray
+	"Parses array of string, eg. #('asdf' 'qwer=tyuo')
+	into array of Strings and Associations,
+	eg. {'asdf'. 'qwer'->'tyuo'}"
+
+	^ anArray collect: [ :each |
+		| split |
+		split := each tokenize: '='.
+		split size = 1
+			ifTrue: [ split first ]
+			ifFalse: [ split first -> split second ]]
+! !
+
 !Package methodsFor: 'dependencies'!
 
 loadDependencies
@@ -671,6 +719,12 @@ printOn: aStream
 
 !Package methodsFor: 'private'!
 
+basicImports
+	"Answer the imports literal JavaScript object as setup in the JavaScript file, if any"
+	
+	<return self.imports || []>
+!
+
 basicName: aString
 	<self.pkgName = aString>
 !
@@ -679,6 +733,17 @@ basicTransport
 	"Answer the transport literal JavaScript object as setup in the JavaScript file, if any"
 	
 	<return self.transport>
+!
+
+sortedImportsAsArray
+	"Answer imports sorted first by type (associations first),
+	then by value"
+
+	^ self imports asArray
+		sorted: [ :a :b |
+			a isString not & b isString or: [
+				a isString = b isString and: [
+					a value <= b value ]]]
 ! !
 
 !Package methodsFor: 'testing'!
@@ -689,6 +754,20 @@ isDirty
 
 isPackage
 	^ true
+! !
+
+!Package methodsFor: 'validation'!
+
+validateImports: aCollection
+
+	aCollection do: [ :import |
+		import isString ifFalse: [
+			(import respondsTo: #key) ifFalse: [
+				self error: 'Imports must be Strings or Associations' ].
+			import key isString & import value isString ifFalse: [
+				self error: 'Key and value must be Strings' ].
+			(import key match: '^[a-zA-Z][a-zA-Z0-9]*$') ifFalse: [
+				self error: 'Keys must be identifiers' ]]]
 ! !
 
 Package class instanceVariableNames: 'defaultCommitPathJs defaultCommitPathSt'!
@@ -704,6 +783,16 @@ named: aPackageName
 
 named: aPackageName ifAbsent: aBlock
 	^ Smalltalk packageAt: aPackageName ifAbsent: aBlock
+!
+
+named: aPackageName imports: anArray transport: aTransport
+	| package |
+	
+	package := self named: aPackageName.
+	package imports: anArray.
+	package transport: aTransport.
+	
+	^ package
 !
 
 named: aPackageName transport: aTransport
@@ -1126,29 +1215,18 @@ It requires the `Compiler` package and the `support/parser.js` parser file in or
 
 !SmalltalkImage methodsFor: 'accessing'!
 
-at: aString
-	self deprecatedAPI.
-	^ self globals at: aString
-!
-
-at: aKey ifAbsent: aBlock
-	self deprecatedAPI.
-	^ self globals at: aKey ifAbsent: aBlock
-!
-
-at: aString put: anObject
-	self deprecatedAPI.
-	^ self globals at: aString put: anObject
+cancelOptOut: anObject
+	"A Smalltalk object has a 'klass' property.
+	If this property is shadowed for anObject by optOut:,
+	the object is treated as plain JS object.
+	This removes the shadow and anObject is Smalltalk object
+	again if it was before."
+	
+	<delete anObject.klass>
 !
 
 core
 	<return $core>
-!
-
-current
-	"Backward compatibility for Smalltalk current ..."
-	self deprecatedAPI.
-	^ self
 !
 
 globals
@@ -1157,6 +1235,14 @@ globals
 
 includesKey: aKey
 	<return $core.hasOwnProperty(aKey)>
+!
+
+optOut: anObject
+	"A Smalltalk object has a 'klass' property.
+	This shadows the property for anObject.
+	The object is treated as plain JS object following this."
+	
+	<anObject.klass = null>
 !
 
 parse: aString
@@ -1190,12 +1276,7 @@ settings
 version
 	"Answer the version string of Amber"
 	
-	^ '0.13.3'
-!
-
-vm
-	self deprecatedAPI: 'Use #core'.
-	^self core
+	^ '0.14.3'
 ! !
 
 !SmalltalkImage methodsFor: 'accessing amd'!
@@ -1309,8 +1390,8 @@ renamePackage: packageName to: newName
 	| pkg |
 	pkg := self packageAt: packageName ifAbsent: [ self error: 'Missing package: ', packageName ].
 	(self packageAt: newName) ifNotNil: [ self error: 'Already exists a package called: ', newName ].
-	(self at: 'packages') at: newName put: pkg.
 	pkg name: newName.
+	self basicRegisterPackage: pkg.
 	self deletePackage: packageName.
 ! !
 
@@ -1325,12 +1406,9 @@ basicParse: aString
 	^ SmalltalkParser parse: aString
 !
 
-createPackage: packageName properties: aDict
-	"Needed to import .st files: they begin with this call."
-	self deprecatedAPI.
-	
-	aDict isEmpty ifFalse: [ self error: 'createPackage:properties: called with nonempty properties' ].
-	^ self createPackage: packageName
+basicRegisterPackage: aPackage
+	"Put aPackage in $core.packages object."
+	<$core.packages[aPackage.pkgName]=aPackage>
 !
 
 deleteClass: aClass
@@ -1375,6 +1453,15 @@ new
 	self shouldNotImplement
 ! !
 
+!Association methodsFor: '*Kernel-Infrastructure'!
+
+importsString
+	"This is for use by package exporter.
+	It can fail for non-string keys and values."
+
+	^ self key importsString, ' -> ', self value importsString
+! !
+
 !SequenceableCollection methodsFor: '*Kernel-Infrastructure'!
 
 do: aBlock displayingProgress: aString
@@ -1390,12 +1477,6 @@ asJavaScriptPropertyName
 <return $core.st2prop(self)>
 !
 
-asJavaScriptSelector
-	"Cannot add next line as it breaks commit:
-	self deprecatedAPI: 'Use #asJavaScriptPropertyName'."
-	^ self asJavaScriptPropertyName
-!
-
 asSetting
 	"Answer aSetting dedicated to locally store a value using this string as key.
 	Nil will be the default value."
@@ -1406,6 +1487,11 @@ asSettingIfAbsent: aDefaultValue
 	"Answer aSetting dedicated to locally store a value using this string as key.
 	Make this setting to have aDefaultValue."
 	^ Setting at: self ifAbsent: aDefaultValue
+!
+
+importsString
+	"Answer receiver as Smalltalk expression"
+	^ '''', (self replace: '''' with: ''''''), ''''
 !
 
 settingValue

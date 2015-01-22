@@ -410,7 +410,7 @@ Here we want to print all the numbers on the Transcript (a console)"
      separatedBy: [Transcript show: ''.''].
 
 
-(Smalltalk current classes select: [:eachClass | eachClass name = ''ProfStef'']) do: [:eachProfstef | eachProfstef next].'
+(Smalltalk classes select: [:eachClass | eachClass name = ''ProfStef'']) do: [:eachProfstef | eachProfstef next].'
 !
 
 loops
@@ -815,9 +815,6 @@ first
 	^ self showCurrentLesson.
 !
 
-goToNextLesson ProfStef next.
-!
-
 next
 	self tutorialPlayer next.
 	^ self showCurrentLesson.
@@ -844,6 +841,7 @@ first
 
 go
 	self first.
+
 !
 
 next
