@@ -6,8 +6,8 @@ The gh-pages branch of this repo ( https://github.com/amber-smalltalk/amber-webs
 
 The pages provided are:
 
-http://amber-lang.net/index.html
-http://amber-lang.net/learn.html
+- http://amber-lang.net/index.html
+- http://amber-lang.net/learn.html
 
 The documentation part of the website (http://doc.amber-lang.net/) is hosted from https://github.com/amber-smalltalk/amber-documentation.git
 
