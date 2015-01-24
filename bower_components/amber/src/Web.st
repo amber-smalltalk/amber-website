@@ -1,4 +1,5 @@
 Smalltalk createPackage: 'Web'!
+(Smalltalk packageAt: 'Web') imports: {'jQuery' -> 'jquery'}!
 Object subclass: #BrowserInterface
 	instanceVariableNames: ''
 	package: 'Web'!
@@ -555,7 +556,7 @@ initialize
 	"Allow JS method calls for the jQuery object.
 	See boot.js DNU handling."
 	
-	jQuery basicAt: 'allowJavaScriptCalls' put: true
+	Smalltalk optOut: jQuery
 ! !
 
 !HTMLCanvas class methodsFor: 'instance creation'!
@@ -1095,9 +1096,13 @@ renderOn: html
 	self
 ! !
 
-!Widget class methodsFor: 'helios'!
+!Widget class methodsFor: 'accessing'!
 
-heliosClass
+classTag
+	"Returns a tag or general category for this class.
+	Typically used to help tools do some reflection.
+	Helios, for example, uses this to decide what icon the class should display."
+	
 	^ 'widget'
 ! !
 

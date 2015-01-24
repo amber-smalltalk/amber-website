@@ -1,7 +1,7 @@
 define("helios/Helios-Commands-Browser", ["amber/boot", "helios/Helios-Commands-Tools"], function($boot){
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
-var smalltalk=$core,_st=$recv,globals=$globals;
 $core.addPackage('Helios-Commands-Browser');
+$core.packages["Helios-Commands-Browser"].innerEval = function (expr) { return eval(expr); };
 $core.packages["Helios-Commands-Browser"].transport = {"type":"amd","amdNamespace":"helios"};
 
 $core.addClass('HLBrowserCommand', $globals.HLToolCommand, [], 'Helios-Commands-Browser');
@@ -13,7 +13,7 @@ protocol: 'testing',
 fn: function (aModel){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv(aModel)._isBrowserModel();
@@ -41,7 +41,7 @@ protocol: 'testing',
 fn: function (aModel){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv(aModel)._isBrowserModel();
@@ -104,7 +104,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._model())._focusOnClasses();
 return self;
@@ -167,7 +167,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._model())._focusOnDocumentation();
 return self;
@@ -230,7 +230,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._model())._focusOnMethods();
 return self;
@@ -293,7 +293,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._model())._focusOnPackages();
 return self;
@@ -356,7 +356,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._model())._focusOnProtocols();
 return self;
@@ -419,7 +419,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._model())._focusOnSourceCode();
 return self;
@@ -482,7 +482,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 $recv(self._model())._editComment();
 return self;
@@ -506,7 +506,7 @@ protocol: 'testing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $3,$2,$1;
 $3=self._model();
@@ -630,7 +630,7 @@ var self=this;
 var targetClass,unclassified;
 function $HLMethodClassifier(){return $globals.HLMethodClassifier||(typeof HLMethodClassifier=="undefined"?nil:HLMethodClassifier)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 targetClass=$recv(self._model())._selectedClass();
 unclassified=$recv($recv(targetClass)._methods())._select_((function(e){
@@ -708,7 +708,7 @@ var self=this;
 var targetClass,output,first;
 function $HLInitializeGenerator(){return $globals.HLInitializeGenerator||(typeof HLInitializeGenerator=="undefined"?nil:HLInitializeGenerator)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2,$3,$4,$5;
 $1=self._model();
@@ -792,7 +792,7 @@ var self=this;
 var targetClass,output;
 function $HLAccessorsGenerator(){return $globals.HLAccessorsGenerator||(typeof HLAccessorsGenerator=="undefined"?nil:HLAccessorsGenerator)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1,$2,$3;
 $1=self._model();
@@ -906,7 +906,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=self._model();
@@ -974,7 +974,7 @@ protocol: 'executing',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=self._model();

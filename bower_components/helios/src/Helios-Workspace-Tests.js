@@ -1,7 +1,7 @@
 define("helios/Helios-Workspace-Tests", ["amber/boot", "amber_core/SUnit"], function($boot){
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
-var smalltalk=$core,_st=$recv,globals=$globals;
 $core.addPackage('Helios-Workspace-Tests');
+$core.packages["Helios-Workspace-Tests"].innerEval = function (expr) { return eval(expr); };
 $core.packages["Helios-Workspace-Tests"].transport = {"type":"amd","amdNamespace":"helios"};
 
 $core.addClass('HLCodeWidgetTest', $globals.TestCase, [], 'Helios-Workspace-Tests');
@@ -14,7 +14,7 @@ var self=this;
 function $HLCodeWidget(){return $globals.HLCodeWidget||(typeof HLCodeWidget=="undefined"?nil:HLCodeWidget)}
 function $HashedCollection(){return $globals.HashedCollection||(typeof HashedCollection=="undefined"?nil:HashedCollection)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) { 
+return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
 $1=$recv($recv($HLCodeWidget())._pcKeyMap())._isKindOf_($HashedCollection());

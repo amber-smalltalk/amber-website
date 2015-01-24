@@ -47,6 +47,7 @@ openMethod: aCompiledMethod
 		"Workaround for the package selection announcement when the package list is focused"	
 		focusOnSourceCode;
 		selectedPackage: aCompiledMethod methodClass package;
+		showInstance: aCompiledMethod methodClass isMetaclass not;
 		selectedClass: aCompiledMethod methodClass;
 		selectedProtocol: aCompiledMethod protocol;
 		selectedMethod: aCompiledMethod;
@@ -261,12 +262,14 @@ HLToolModel subclass: #HLBrowserModel
 !HLBrowserModel methodsFor: 'accessing'!
 
 showComment
-	^ showComment ifNil: [ true ]
+	^ showComment ifNil: [ 
+		showComment := 'helios.browser.showComment' settingValueIfAbsent: true ]
 !
 
 showComment: aBoolean
 	self withChangesDo: [
 		showComment := aBoolean.
+		'helios.browser.showComment' settingValue: aBoolean.
 		self announcer announce: HLShowCommentToggled new ]
 !
 
@@ -450,7 +453,11 @@ I render a list of classes in the selected package.!
 !HLClassesListWidget methodsFor: 'accessing'!
 
 cssClassForItem: aClass
-	^ aClass theNonMetaClass heliosClass
+	| nonMeta |
+	nonMeta := aClass theNonMetaClass.
+	(nonMeta respondsTo: #classTag)
+		ifTrue: [ ^ nonMeta classTag ]
+		ifFalse: [ ^ nonMeta heliosClass ]
 !
 
 getChildrenOf: aClass

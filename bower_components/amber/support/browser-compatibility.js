@@ -1,5 +1,10 @@
-define([
-    './ensure-console',
-    'amber_lib/es5-shim/es5-shim.min',
-    'amber_lib/es5-shim/es5-sham.min'
-], {});
+/* Make sure that console is defined */
+if(typeof console === "undefined") {
+	this.console = {
+		log: function() {},
+		warn: function() {},
+		info: function() {},
+		debug: function() {},
+		error: function() {}
+	};
+}

@@ -1,3 +1,64 @@
+0.14.3:
+
+* #heliosClass is now #classTag
+
++ Compiler >>
+  + eval:forPackage:
++ Behavior >>
+  + packageOfProtocol:
++ Exporter >>
+  + exportPackageContextOf:on:
+  + exportPackageImportsOf:on:
++ Package >>
+  + basicImports
+  + imports
+  + imports:
+  + importsDefinition
+  + importsFromJson:
+  + importsAsJson
+  + sortedImportsAsArray
+  + validateImports:
++ Package class >>
+  + named:imports:transport:
++ Association >>
+  + importsString
++ String >>
+  + importsString
+
+
+0.14.1:
+
+* NativeFunction class >> constructor:[value:...] deprecated
+
++ NativeFunction class >>
+  + constructorNamed:
+  + constructorNamed:value:
+  + constructorNamed:value:value:
+  + constructorNamed:value:value:value:
+  + constructorOf:
+  + constructorOf:value:
+  + constructorOf:value:value:
+  + constructorOf:value:value:value:
+  + functionNamed:
+  + functionNamed:value:
+  + functionNamed:value:value:
+  + functionNamed:value:value:value:
+  + functionNamed:valueWithArgs:
+  + functionOf:
+  + functionOf:value:
+  + functionOf:value:value:
+  + functionOf:value:value:value:
+  + functionOf:valueWithArgs:
+  + methodOf:this:
+  + methodOf:this:value:
+  + methodOf:this:value:value:
+  + methodOf:this:value:value:value:
+  + methodOf:this:valueWithArgs:
++ SmalltalkImage >>
+  + optOut:
+  + cancelOptOut:
+
+
 0.14.0:
 
 + Object >>
@@ -6,6 +67,26 @@
 + BlockClosure >>
   + asJQuery
   + asJQueryInContext:
+
+- AnnouncementSubscription >>
+  - block
+  - block:
+- Collection >>
+  - contains:
+- String >>
+  - asSelector
+  - asJavaScriptSelector
+- SmalltalkImage >>
+  - at:
+  - at:ifAbsent:
+  - at:put:
+  - current
+  - vm
+  - createPackage:properties:
+- MethodContext >>
+  - temps
+- Object >>
+  - try:catch:
 
 
 0.13.2:

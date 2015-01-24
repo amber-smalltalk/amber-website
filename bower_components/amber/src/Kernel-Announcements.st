@@ -16,20 +16,6 @@ announcementClass: aClass
 	announcementClass := aClass
 !
 
-block
-	"Use #valuable instead"
-	
-	self deprecatedAPI.
-	^ self valuable
-!
-
-block: aValuable
-	"Use #valuable instead"
-	
-	self deprecatedAPI.
-	self valuable: aValuable
-!
-
 receiver
 	^ self valuable receiver
 !
@@ -203,9 +189,13 @@ Object subclass: #SystemAnnouncement
 !SystemAnnouncement commentStamp!
 I am the superclass of all system announcements!
 
-!SystemAnnouncement class methodsFor: 'helios'!
+!SystemAnnouncement class methodsFor: 'accessing'!
 
-heliosClass
+classTag
+	"Returns a tag or general category for this class.
+	Typically used to help tools do some reflection.
+	Helios, for example, uses this to decide what icon the class should display."
+	
 	^ 'announcement'
 ! !
 
@@ -400,13 +390,8 @@ I am the abstract superclass of protocol-related announcements.!
 !ProtocolAnnouncement methodsFor: 'accessing'!
 
 package
-
-	(self protocol beginsWith: '*') ifFalse: [
-		^ self theClass package ].
-		
-	^ Package 
-		named: self protocol allButFirst
-		ifAbsent: [ nil ]
+	
+	^ self theClass ifNotNil: [ :class | class packageOfProtocol: self protocol ]
 !
 
 protocol

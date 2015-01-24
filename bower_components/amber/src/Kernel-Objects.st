@@ -114,10 +114,38 @@ printString
 
 !ProtoObject methodsFor: 'testing'!
 
+ifNil: aBlock
+	"inlined in the Compiler"
+	^ self
+!
+
+ifNil: aBlock ifNotNil: anotherBlock
+	"inlined in the Compiler"
+	^ anotherBlock value: self
+!
+
+ifNotNil: aBlock
+	"inlined in the Compiler"
+	^ aBlock value: self
+!
+
+ifNotNil: aBlock ifNil: anotherBlock
+	"inlined in the Compiler"
+	^ aBlock value: self
+!
+
 isKindOf: aClass
 	^ (self isMemberOf: aClass)
 		ifTrue: [ true ]
 		ifFalse: [ self class inheritsFrom: aClass ]
+!
+
+isNil
+	^ false
+!
+
+notNil
+	^ self isNil not
 ! !
 
 !ProtoObject class methodsFor: 'initialization'!
@@ -283,12 +311,6 @@ subclassResponsibility
 
 throw: anObject
 	< throw anObject >
-!
-
-try: aBlock catch: anotherBlock
-	self deprecatedAPI.
-	
-	^ aBlock tryCatch: anotherBlock
 ! !
 
 !Object methodsFor: 'inspecting'!
@@ -322,26 +344,6 @@ putOn: aStream
 
 !Object methodsFor: 'testing'!
 
-ifNil: aBlock
-	"inlined in the Compiler"
-	^ self
-!
-
-ifNil: aBlock ifNotNil: anotherBlock
-	"inlined in the Compiler"
-	^ anotherBlock value: self
-!
-
-ifNotNil: aBlock
-	"inlined in the Compiler"
-	^ aBlock value: self
-!
-
-ifNotNil: aBlock ifNil: anotherBlock
-	"inlined in the Compiler"
-	^ aBlock value: self
-!
-
 isBehavior
 	^ false
 !
@@ -370,10 +372,6 @@ isMetaclass
 	^ false
 !
 
-isNil
-	^ false
-!
-
 isNumber
 	^ false
 !
@@ -392,10 +390,6 @@ isString
 
 isSymbol
 	^ false
-!
-
-notNil
-	^ self isNil not
 !
 
 respondsTo: aSelector
@@ -718,9 +712,13 @@ printOn: aStream
 	aStream nextPutAll: self asString
 ! !
 
-!Date class methodsFor: 'helios'!
+!Date class methodsFor: 'accessing'!
 
-heliosClass
+classTag
+	"Returns a tag or general category for this class.
+	Typically used to help tools do some reflection.
+	Helios, for example, uses this to decide what icon the class should display."
+	
 	^ 'magnitude'
 ! !
 
@@ -1100,9 +1098,13 @@ positive
 	^ self >= 0
 ! !
 
-!Number class methodsFor: 'helios'!
+!Number class methodsFor: 'accessing'!
 
-heliosClass
+classTag
+	"Returns a tag or general category for this class.
+	Typically used to help tools do some reflection.
+	Helios, for example, uses this to decide what icon the class should display."
+	
 	^ 'magnitude'
 ! !
 
@@ -1239,9 +1241,13 @@ translateBy: delta
 	^ (delta x + x) @ (delta y + y)
 ! !
 
-!Point class methodsFor: 'helios'!
+!Point class methodsFor: 'accessing'!
 
-heliosClass
+classTag
+	"Returns a tag or general category for this class.
+	Typically used to help tools do some reflection.
+	Helios, for example, uses this to decide what icon the class should display."
+	
 	^ 'magnitude'
 ! !
 

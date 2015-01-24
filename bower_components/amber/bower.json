@@ -1,6 +1,6 @@
 {
   "name": "amber",
-  "version": "0.13.3",
+  "version": "0.14.3",
   "main": "support/amber.js",
   "ignore": [
     "**/.*",
@@ -15,11 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": ">=1.7.0",
-    "jquery-ui": ">=1.9.2",
-    "es5-shim": "^4.0.3",
-    "require-css": "^0.1.2",
-    "codemirror": "^4.7.0"
+    "jquery": ">=1.7.0"
   },
   "devDependencies": {
     "jquery": ">=1.7.0 <2.1.0"

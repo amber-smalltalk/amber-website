@@ -1,7 +1,7 @@
 define("amber_core/Kernel-Announcements", ["amber/boot", "amber_core/Kernel-Objects"], function($boot){
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
-var smalltalk=$core,_st=$recv,globals=$globals;
 $core.addPackage('Kernel-Announcements');
+$core.packages["Kernel-Announcements"].innerEval = function (expr) { return eval(expr); };
 $core.packages["Kernel-Announcements"].transport = {"type":"amd","amdNamespace":"amber_core"};
 
 $core.addClass('AnnouncementSubscription', $globals.Object, ['valuable', 'announcementClass'], 'Kernel-Announcements');
@@ -44,57 +44,6 @@ source: "announcementClass: aClass\x0a\x09announcementClass := aClass",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
-}),
-$globals.AnnouncementSubscription);
-
-$core.addMethod(
-$core.method({
-selector: "block",
-protocol: 'accessing',
-fn: function (){
-var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-var $1;
-self._deprecatedAPI();
-$1=self._valuable();
-return $1;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"block",{},$globals.AnnouncementSubscription)});
-//>>excludeEnd("ctx");
-},
-//>>excludeStart("ide", pragmas.excludeIdeData);
-args: [],
-source: "block\x0a\x09\x22Use #valuable instead\x22\x0a\x09\x0a\x09self deprecatedAPI.\x0a\x09^ self valuable",
-referencedClasses: [],
-//>>excludeEnd("ide");
-messageSends: ["deprecatedAPI", "valuable"]
-}),
-$globals.AnnouncementSubscription);
-
-$core.addMethod(
-$core.method({
-selector: "block:",
-protocol: 'accessing',
-fn: function (aValuable){
-var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-self._deprecatedAPI();
-self._valuable_(aValuable);
-return self;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"block:",{aValuable:aValuable},$globals.AnnouncementSubscription)});
-//>>excludeEnd("ctx");
-},
-//>>excludeStart("ide", pragmas.excludeIdeData);
-args: ["aValuable"],
-source: "block: aValuable\x0a\x09\x22Use #valuable instead\x22\x0a\x09\x0a\x09self deprecatedAPI.\x0a\x09self valuable: aValuable",
-referencedClasses: [],
-//>>excludeEnd("ide");
-messageSends: ["deprecatedAPI", "valuable:"]
 }),
 $globals.AnnouncementSubscription);
 
@@ -707,8 +656,8 @@ $globals.SystemAnnouncement.comment="I am the superclass of all system announcem
 
 $core.addMethod(
 $core.method({
-selector: "heliosClass",
-protocol: 'helios',
+selector: "classTag",
+protocol: 'accessing',
 fn: function (){
 var self=this;
 return "announcement";
@@ -716,7 +665,7 @@ return "announcement";
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "heliosClass\x0a\x09^ 'announcement'",
+source: "classTag\x0a\x09\x22Returns a tag or general category for this class.\x0a\x09Typically used to help tools do some reflection.\x0a\x09Helios, for example, uses this to decide what icon the class should display.\x22\x0a\x09\x0a\x09^ 'announcement'",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
@@ -1115,35 +1064,29 @@ selector: "package",
 protocol: 'accessing',
 fn: function (){
 var self=this;
-function $Package(){return $globals.Package||(typeof Package=="undefined"?nil:Package)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $2,$1,$3,$4;
-$2=self._protocol();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["protocol"]=1;
-//>>excludeEnd("ctx");
-$1=$recv($2)._beginsWith_("*");
-if(!$core.assert($1)){
-$3=$recv(self._theClass())._package();
-return $3;
+var $2,$1,$receiver;
+$2=self._theClass();
+if(($receiver = $2) == null || $receiver.isNil){
+$1=$2;
+} else {
+var class_;
+class_=$receiver;
+$1=$recv(class_)._packageOfProtocol_(self._protocol());
 };
-$4=$recv($Package())._named_ifAbsent_($recv(self._protocol())._allButFirst(),(function(){
-return nil;
-
-}));
-return $4;
+return $1;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"package",{},$globals.ProtocolAnnouncement)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: [],
-source: "package\x0a\x0a\x09(self protocol beginsWith: '*') ifFalse: [\x0a\x09\x09^ self theClass package ].\x0a\x09\x09\x0a\x09^ Package \x0a\x09\x09named: self protocol allButFirst\x0a\x09\x09ifAbsent: [ nil ]",
-referencedClasses: ["Package"],
+source: "package\x0a\x09\x0a\x09^ self theClass ifNotNil: [ :class | class packageOfProtocol: self protocol ]",
+referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["ifFalse:", "beginsWith:", "protocol", "package", "theClass", "named:ifAbsent:", "allButFirst"]
+messageSends: ["ifNotNil:", "theClass", "packageOfProtocol:", "protocol"]
 }),
 $globals.ProtocolAnnouncement);
 
