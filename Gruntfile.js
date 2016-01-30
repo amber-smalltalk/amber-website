@@ -4,14 +4,11 @@ module.exports = function (grunt) {
     var path = require('path');
 
     // These plugins provide necessary tasks.
-    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
-    grunt.loadNpmTasks('grunt-execute');
     grunt.loadNpmTasks('amber-dev');
 
     // Default task.
     grunt.registerTask('default', ['amberc:all']);
-    grunt.registerTask('test', ['amberc:test_runner', 'execute:test_runner', 'clean:test_runner']);
     grunt.registerTask('devel', ['amdconfig:app', 'requirejs:devel']);
     grunt.registerTask('deploy', ['amdconfig:app', 'requirejs:deploy']);
 
@@ -25,32 +22,6 @@ module.exports = function (grunt) {
             '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
             ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
         // task configuration
-        amberc: {
-            options: {
-                amber_dir: path.join(__dirname, "bower_components", "amber"),
-                library_dirs: ['src'],
-                closure_jar: ''
-            },
-            all: {
-                src: [
-
-                ],
-                amd_namespace: 'amber-trysmalltalk',
-                libraries: ['SUnit', 'Web']
-            },
-            test_runner: {
-                src: ['node_modules/amber-dev/lib/Test.st'],
-                libraries: [
-                    /* add dependencies packages here */
-                    /* add other code-to-test packages here */
-                    'SUnit',
-                    /* add other test packages here */
-                ],
-                main_class: 'NodeTestRunner',
-                output_name: 'test_runner'
-            }
-        },
-
         amdconfig: {app: {dest: 'config.js'}},
 
         requirejs: {
@@ -63,6 +34,7 @@ module.exports = function (grunt) {
                     excludeIdeData: true,
                     excludeDebugContexts: true
                 },
+                optimize: 'uglify2',
                 include: ['config', 'node_modules/requirejs/require', 'deploy'],
                 out: "the.js"
             }},
@@ -74,16 +46,6 @@ module.exports = function (grunt) {
                 include: ['config', 'node_modules/requirejs/require'],
                 out: "the.js"
             }}
-        },
-
-        execute: {
-            test_runner: {
-                src: ['test_runner.js']
-            }
-        },
-
-        clean: {
-            test_runner: ['test_runner.js']
         }
     });
 
