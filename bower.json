@@ -26,8 +26,8 @@
   ],
   "private": false,
   "dependencies": {
-    "amber": "0.14.3",
-    "trysmalltalk": "0.1.1"
+    "amber": "*",
+    "trysmalltalk": "0.1.2"
   },
   "devDependencies": {
     "amber-ide-starter-dialog": "^0.1.0",

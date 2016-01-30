@@ -1,4 +1,4 @@
-define("amber_core/Kernel-Methods", ["amber/boot", "amber_core/Kernel-Objects"], function($boot){
+define("amber_core/Kernel-Methods", ["amber/boot", "amber_core/Kernel-Objects"], function($boot){"use strict";
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
 $core.addPackage('Kernel-Methods');
 $core.packages["Kernel-Methods"].innerEval = function (expr) { return eval(expr); };
@@ -409,6 +409,8 @@ return $core.withContext(function($ctx1) {
 		try {
 			return self._value();
 		} catch(error) {
+			// pass non-local returns undetected
+			if (Array.isArray(error) && error.length === 1) throw error;
 			return aBlock._value_(error);
 		}
 	;
@@ -419,7 +421,7 @@ return self;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["aBlock"],
-source: "tryCatch: aBlock\x0a\x09<\x0a\x09\x09try {\x0a\x09\x09\x09return self._value();\x0a\x09\x09} catch(error) {\x0a\x09\x09\x09return aBlock._value_(error);\x0a\x09\x09}\x0a\x09>",
+source: "tryCatch: aBlock\x0a\x09<\x0a\x09\x09try {\x0a\x09\x09\x09return self._value();\x0a\x09\x09} catch(error) {\x0a\x09\x09\x09// pass non-local returns undetected\x0a\x09\x09\x09if (Array.isArray(error) && error.length === 1) throw error;\x0a\x09\x09\x09return aBlock._value_(error);\x0a\x09\x09}\x0a\x09>",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
@@ -3041,12 +3043,12 @@ selector: "exists:",
 protocol: 'testing',
 fn: function (aString){
 var self=this;
-function $PlatformInterface(){return $globals.PlatformInterface||(typeof PlatformInterface=="undefined"?nil:PlatformInterface)}
+function $Smalltalk(){return $globals.Smalltalk||(typeof Smalltalk=="undefined"?nil:Smalltalk)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
-$1=$recv($PlatformInterface())._existsGlobal_(aString);
+$1=$recv($Smalltalk())._existsJsGlobal_(aString);
 return $1;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"exists:",{aString:aString},$globals.NativeFunction.klass)});
@@ -3054,10 +3056,10 @@ return $1;
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["aString"],
-source: "exists: aString\x0a\x09^ PlatformInterface existsGlobal: aString",
-referencedClasses: ["PlatformInterface"],
+source: "exists: aString\x0a\x09^ Smalltalk existsJsGlobal: aString",
+referencedClasses: ["Smalltalk"],
 //>>excludeEnd("ide");
-messageSends: ["existsGlobal:"]
+messageSends: ["existsJsGlobal:"]
 }),
 $globals.NativeFunction.klass);
 

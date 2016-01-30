@@ -89,7 +89,7 @@ tableOfContents
 	'loops'
 	'iterators'
 
-	'instanciation'
+	'instantiation'
 
 	'reflection'
 	'reflectionContinued'
@@ -341,9 +341,9 @@ window alert: ''hello world!!''.
 ProfStef next.'
 !
 
-instanciation
+instantiation
 	^ Lesson
-title: 'Instanciation' 
+title: 'Instantiation' 
 contents: 
 '"Objects are instances of their class. Usually, we send the message #new to a class for creating an instance of this class.
 
@@ -351,7 +351,7 @@ For example, let''s create an instance of the class Array:"
 
 Array new
 	add: ''Some text'';
-	add: 3.;
+	add: 3;
 	yourself.
 
 "See the array we''ve created? Actually, #(''Some text'' 3) is just a shorthand for instantiating arrays."
@@ -705,7 +705,7 @@ ProfStef class methodAt: #goToNextLesson.
 
 "Then move forward:"
 
-ProfStef perform:#next'
+ProfStef perform: #next'
 !
 
 theEnd
@@ -841,7 +841,6 @@ first
 
 go
 	self first.
-
 !
 
 next

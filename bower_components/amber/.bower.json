@@ -1,6 +1,6 @@
 {
   "name": "amber",
-  "version": "0.14.3",
+  "version": "0.14.16",
   "main": "support/amber.js",
   "ignore": [
     "**/.*",
@@ -14,20 +14,14 @@
     "test",
     "tests"
   ],
-  "dependencies": {
-    "jquery": ">=1.7.0"
-  },
-  "devDependencies": {
-    "jquery": ">=1.7.0 <2.1.0"
-  },
   "homepage": "https://github.com/amber-smalltalk/amber",
-  "_release": "0.14.3",
+  "_release": "0.14.16",
   "_resolution": {
     "type": "version",
-    "tag": "0.14.3",
-    "commit": "4fdd701043d2883990a725aa2911d412efef493d"
+    "tag": "0.14.16",
+    "commit": "d88f3c5ce653555aec43f1bbe0df7e5f41231d66"
   },
   "_source": "git://github.com/amber-smalltalk/amber.git",
-  "_target": "0.14.3",
+  "_target": ">=0.14.13 <0.14.17",
   "_originalSource": "amber"
 }

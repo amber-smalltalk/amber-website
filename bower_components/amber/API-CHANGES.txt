@@ -1,3 +1,91 @@
+0.14.14:
+
+* InterfacingObject >> ajax: deprecated
+* PlatformInterface class deprecated
+* Class BrowserInterface removed
+* Class Terminal, BrowserTerminal added
+* Class Platform, BrowserPlatform added
+
++ Environment >>
+  + renamePackage:to:
++ Platform class >>
+  + globals
+  + newXhr
++ Terminal class >>
+  + alert:
+  + confirm:
+  + prompt:
+  + prompt:default:
+SmalltalkImage >>
+  + existsJsGlobal:
+
+- PlatformInterface class >>
+  - initialize
+  - setWorker:
+
+
+0.14.12:
+
++ JSObjectProxy >>
+  + putOn:
++ ProtoStream >>
+  + nextPutJSObject:
+
+
+0.14.11:
+
+* Basic streaming protocol extracted from Stream to ProtoStream
+
++ Object >>
+  + in:
++ JSObjectProxy >>
+  + in:
+
+
+0.14.10:
+
++ JSObjectProxy class >>
+  + addObjectVariablesTo:ofProxy:
+  + compareJSObjectOfProxy:withProxy:
+  + forwardMessage:withArguments:ofProxy:
+  + jsObject:ofProxy:
+  + lookupProperty:ofProxy:
+
+- JSObjectProxy >>
+  - jsObject:
+  - lookupProperty:
+  - compareJSObjectWith:
+  - addObjectVariablesTo:
+  - forwardMessage:withArguments:
+
+
+0.14.4:
+
++ AmdExporter >>
+  + importsForOutput:
++ AbstractCodeGenerator >>
+  + currentPackage
+  + currentPackage:
++ Compiler >>
+  + currentPackage
+  + currentPackage:
+  + compile:forClass:protocol:
+  + compileNode:forClass:package:
++ SemanticAnalyzer >>
+  + thePackage
+  + thePackage:
+  + isVariableUndefined:inPackage:
+
+- Compiler >>
+  - compile:
+  - compile:forClass:
+  - compileExpression:
+- SemanticAnalyzer >>
+  - isVariableGloabllyUndefined:
+- Behavior >>
+  - compile:
+
+
 0.14.3:
 
 * #heliosClass is now #classTag
@@ -24,6 +112,21 @@
   + importsString
 + String >>
   + importsString
++ ProtoObject >>
+  + ifNil:
+  + ifNil:ifNotNil:
+  + ifNotNil:
+  + ifNotNil:ifNil:
+  + isNil
+  + notNil
+
+- Object >>
+  - ifNil:
+  - ifNil:ifNotNil:
+  - ifNotNil:
+  - ifNotNil:ifNil:
+  - isNil
+  - notNil
 
 
 0.14.1:

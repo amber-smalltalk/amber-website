@@ -1,4 +1,4 @@
-define("amber_core/Kernel-Objects", ["amber/boot"], function($boot){
+define("amber_core/Kernel-Objects", ["amber/boot"], function($boot){"use strict";
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
 $core.addPackage('Kernel-Objects');
 $core.packages["Kernel-Objects"].innerEval = function (expr) { return eval(expr); };
@@ -42,23 +42,18 @@ var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $2,$1;
-$2=self._identityHash();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["identityHash"]=1;
-//>>excludeEnd("ctx");
-$1=$recv($2).__eq($recv(anObject)._identityHash());
-return $1;
+return self._class() === $recv(anObject)._class() && self._isSameInstanceAs_(anObject);
+return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"==",{anObject:anObject},$globals.ProtoObject)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["anObject"],
-source: "== anObject\x0a\x09^ self identityHash = anObject identityHash",
+source: "== anObject\x0a<return self._class() === $recv(anObject)._class() && self._isSameInstanceAs_(anObject)>",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["=", "identityHash"]
+messageSends: []
 }),
 $globals.ProtoObject);
 
@@ -442,6 +437,35 @@ source: "isNil\x0a\x09^ false",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
+}),
+$globals.ProtoObject);
+
+$core.addMethod(
+$core.method({
+selector: "isSameInstanceAs:",
+protocol: 'comparing',
+fn: function (anObject){
+var self=this;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $2,$1;
+$2=self._identityHash();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["identityHash"]=1;
+//>>excludeEnd("ctx");
+$1=$recv($2).__eq($recv(anObject)._identityHash());
+return $1;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"isSameInstanceAs:",{anObject:anObject},$globals.ProtoObject)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: ["anObject"],
+source: "isSameInstanceAs: anObject\x0a\x09^ self identityHash = anObject identityHash",
+referencedClasses: [],
+//>>excludeEnd("ide");
+messageSends: ["=", "identityHash"]
 }),
 $globals.ProtoObject);
 
@@ -1161,43 +1185,26 @@ $globals.Object);
 
 $core.addMethod(
 $core.method({
-selector: "inspectOn:",
-protocol: 'inspecting',
-fn: function (anInspector){
+selector: "in:",
+protocol: 'evaluating',
+fn: function (aValuable){
 var self=this;
-var variables;
-function $Dictionary(){return $globals.Dictionary||(typeof Dictionary=="undefined"?nil:Dictionary)}
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
 var $1;
-variables=$recv($Dictionary())._new();
-$recv(variables)._at_put_("#self",self);
+$1=$recv(aValuable)._value_(self);
+return $1;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["at:put:"]=1;
-//>>excludeEnd("ctx");
-$recv($recv(self._class())._allInstanceVariableNames())._do_((function(each){
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx2) {
-//>>excludeEnd("ctx");
-return $recv(variables)._at_put_(each,self._instVarAt_(each));
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx2) {$ctx2.fillBlock({each:each},$ctx1,1)});
-//>>excludeEnd("ctx");
-}));
-$recv(anInspector)._setLabel_(self._printString());
-$1=$recv(anInspector)._setVariables_(variables);
-return self;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"inspectOn:",{anInspector:anInspector,variables:variables},$globals.Object)});
+}, function($ctx1) {$ctx1.fill(self,"in:",{aValuable:aValuable},$globals.Object)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
-args: ["anInspector"],
-source: "inspectOn: anInspector\x0a\x09| variables |\x0a\x09variables := Dictionary new.\x0a\x09variables at: '#self' put: self.\x0a\x09self class allInstanceVariableNames do: [ :each |\x0a\x09\x09variables at: each put: (self instVarAt: each) ].\x0a\x09anInspector\x0a\x09\x09setLabel: self printString;\x0a\x09\x09setVariables: variables",
-referencedClasses: ["Dictionary"],
+args: ["aValuable"],
+source: "in: aValuable\x0a\x09^ aValuable value: self",
+referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["new", "at:put:", "do:", "allInstanceVariableNames", "class", "instVarAt:", "setLabel:", "printString", "setVariables:"]
+messageSends: ["value:"]
 }),
 $globals.Object);
 
@@ -1622,7 +1629,7 @@ $globals.Object);
 $core.addMethod(
 $core.method({
 selector: "value",
-protocol: 'accessing',
+protocol: 'evaluating',
 fn: function (){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
@@ -1795,35 +1802,6 @@ $globals.Boolean);
 
 $core.addMethod(
 $core.method({
-selector: "=",
-protocol: 'comparing',
-fn: function (aBoolean){
-var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-
-		return aBoolean != null &&
-			typeof aBoolean._isBoolean === "function" &&
-			aBoolean._isBoolean() &&
-			Boolean(self == true) == aBoolean
-	;
-return self;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"=",{aBoolean:aBoolean},$globals.Boolean)});
-//>>excludeEnd("ctx");
-},
-//>>excludeStart("ide", pragmas.excludeIdeData);
-args: ["aBoolean"],
-source: "= aBoolean\x0a\x09<\x0a\x09\x09return aBoolean != null &&\x0a\x09\x09\x09typeof aBoolean._isBoolean === \x22function\x22 &&\x0a\x09\x09\x09aBoolean._isBoolean() &&\x0a\x09\x09\x09Boolean(self == true) == aBoolean\x0a\x09>",
-referencedClasses: [],
-//>>excludeEnd("ide");
-messageSends: []
-}),
-$globals.Boolean);
-
-$core.addMethod(
-$core.method({
 selector: "==",
 protocol: 'comparing',
 fn: function (aBoolean){
@@ -1831,19 +1809,18 @@ var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-var $1;
-$1=self.__eq(aBoolean);
-return $1;
+return aBoolean != null && self.valueOf() === (typeof aBoolean === "boolean" ? aBoolean : aBoolean.valueOf());
+return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 }, function($ctx1) {$ctx1.fill(self,"==",{aBoolean:aBoolean},$globals.Boolean)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["aBoolean"],
-source: "== aBoolean\x0a\x09^ self = aBoolean",
+source: "== aBoolean\x0a<return aBoolean != null && self.valueOf() === (typeof aBoolean === \x22boolean\x22 ? aBoolean : aBoolean.valueOf())>",
 referencedClasses: [],
 //>>excludeEnd("ide");
-messageSends: ["="]
+messageSends: []
 }),
 $globals.Boolean);
 
@@ -2335,6 +2312,51 @@ source: "<= aDate\x0a\x09<return self <= aDate>",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
+}),
+$globals.Date);
+
+$core.addMethod(
+$core.method({
+selector: "=",
+protocol: 'comparing',
+fn: function (aDate){
+var self=this;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $3,$2,$4,$1;
+$3=$recv(aDate)._class();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["class"]=1;
+//>>excludeEnd("ctx");
+$2=$recv($3).__eq_eq(self._class());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=1;
+//>>excludeEnd("ctx");
+$1=$recv($2)._and_((function(){
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx2) {
+//>>excludeEnd("ctx");
+$4=self._asMilliseconds();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx2.sendIdx["asMilliseconds"]=1;
+//>>excludeEnd("ctx");
+return $recv($4).__eq_eq($recv(aDate)._asMilliseconds());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)});
+//>>excludeEnd("ctx");
+}));
+return $1;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"=",{aDate:aDate},$globals.Date)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: ["aDate"],
+source: "= aDate\x0a\x09^ (aDate class == self class) and: [ self asMilliseconds == aDate asMilliseconds ]",
+referencedClasses: [],
+//>>excludeEnd("ide");
+messageSends: ["and:", "==", "class", "asMilliseconds"]
 }),
 $globals.Date);
 
@@ -3462,27 +3484,22 @@ $globals.Number);
 
 $core.addMethod(
 $core.method({
-selector: "=",
+selector: "==",
 protocol: 'comparing',
 fn: function (aNumber){
 var self=this;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
 return $core.withContext(function($ctx1) {
 //>>excludeEnd("ctx");
-
-		return aNumber != null &&
-			typeof aNumber._isNumber === "function" &&
-			aNumber._isNumber() &&
-			Number(self) == aNumber
-	;
+return aNumber != null && Number(self) === (typeof aNumber === "number" ? aNumber : aNumber.valueOf());
 return self;
 //>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"=",{aNumber:aNumber},$globals.Number)});
+}, function($ctx1) {$ctx1.fill(self,"==",{aNumber:aNumber},$globals.Number)});
 //>>excludeEnd("ctx");
 },
 //>>excludeStart("ide", pragmas.excludeIdeData);
 args: ["aNumber"],
-source: "= aNumber\x0a\x09<\x0a\x09\x09return aNumber != null &&\x0a\x09\x09\x09typeof aNumber._isNumber === \x22function\x22 &&\x0a\x09\x09\x09aNumber._isNumber() &&\x0a\x09\x09\x09Number(self) == aNumber\x0a\x09>",
+source: "== aNumber\x0a<return aNumber != null && Number(self) === (typeof aNumber === \x22number\x22 ? aNumber : aNumber.valueOf())>",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
@@ -3960,31 +3977,6 @@ source: "floor\x0a\x09<return Math.floor(self);>",
 referencedClasses: [],
 //>>excludeEnd("ide");
 messageSends: []
-}),
-$globals.Number);
-
-$core.addMethod(
-$core.method({
-selector: "identityHash",
-protocol: 'accessing',
-fn: function (){
-var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-var $1;
-$1=$recv(self._asString()).__comma("n");
-return $1;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"identityHash",{},$globals.Number)});
-//>>excludeEnd("ctx");
-},
-//>>excludeStart("ide", pragmas.excludeIdeData);
-args: [],
-source: "identityHash\x0a\x09^ self asString, 'n'",
-referencedClasses: [],
-//>>excludeEnd("ide");
-messageSends: [",", "asString"]
 }),
 $globals.Number);
 

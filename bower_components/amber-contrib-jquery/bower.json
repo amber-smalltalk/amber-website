@@ -1,0 +1,34 @@
+{
+  "name": "amber-contrib-jquery",
+  "version": "0.1.0",
+  "homepage": "https://github.com/amber-smalltalk/amber-contrib-jquery",
+  "description": "Amber Smalltalk wrapper around jQuery",
+  "main": "local.amd.json",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "amber",
+    "smalltalk",
+    "jquery"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/*.js",
+    "/*.html",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "amber": "*",
+    "jquery": ">=1.7.0"
+  },
+  "devDependencies": {
+    "amber-ide-starter-dialog": "^0.1.0",
+    "amber-contrib-legacy": "^0.2.0",
+    "helios": ">=0.4.3"
+  }
+}

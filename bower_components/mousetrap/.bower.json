@@ -1,12 +1,12 @@
 {
   "name": "mousetrap",
   "homepage": "https://github.com/ccampbell/mousetrap",
-  "version": "1.4.6",
-  "_release": "1.4.6",
+  "version": "1.5.3",
+  "_release": "1.5.3",
   "_resolution": {
     "type": "version",
-    "tag": "1.4.6",
-    "commit": "d50e8d64950277f968290d703d47686c5accbac0"
+    "tag": "1.5.3",
+    "commit": "9fffc76078915cabd0e93562fae6249cf176dcf9"
   },
   "_source": "git://github.com/ccampbell/mousetrap.git",
   "_target": "^1.4.6",

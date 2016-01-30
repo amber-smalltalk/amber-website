@@ -1,0 +1,50 @@
+{
+  "name": "amber-contrib-legacy",
+  "description": "Legacy IDE and a few other old non-core packages",
+  "version": "0.2.1",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/test_runner.js",
+    "/config.js",
+    "/the.js",
+    "test",
+    "tests"
+  ],
+  "authors": [
+    {
+      "name": "Herbert Vojčík",
+      "email": "herby@mailbox.sk"
+    }
+  ],
+  "homepage": "https://github.com/amber-smalltalk/amber-contrib-legacy",
+  "keywords": [
+    "Amber",
+    "Smalltalk"
+  ],
+  "license": [
+    "MIT"
+  ],
+  "private": false,
+  "dependencies": {
+    "amber": ">=0.14.14",
+    "amber-contrib-web": ">=0.1.0",
+    "jquery-ui": ">=1.9.2",
+    "codemirror": "^4.7.0",
+    "require-css": "^0.1.2"
+  },
+  "devDependencies": {
+    "amber-ide-starter-dialog": "^0.1.0",
+    "helios": ">=0.5.0"
+  },
+  "_release": "0.2.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.1",
+    "commit": "19dc92309c7557c96c5ecba22a4c5883d868a8ca"
+  },
+  "_source": "git://github.com/amber-smalltalk/amber-contrib-legacy.git",
+  "_target": "^0.2.0",
+  "_originalSource": "amber-contrib-legacy"
+}

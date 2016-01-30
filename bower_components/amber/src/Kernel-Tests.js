@@ -1,4 +1,4 @@
-define("amber_core/Kernel-Tests", ["amber/boot", "amber_core/SUnit", "amber_core/Kernel-Objects"], function($boot){
+define("amber_core/Kernel-Tests", ["amber/boot", "amber_core/SUnit", "amber_core/Kernel-Objects"], function($boot){"use strict";
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
 $core.addPackage('Kernel-Tests');
 $core.packages["Kernel-Tests"].innerEval = function (expr) { return eval(expr); };
@@ -321,6 +321,74 @@ $globals.AnnouncerTest);
 $core.addClass('BlockClosureTest', $globals.TestCase, [], 'Kernel-Tests');
 $core.addMethod(
 $core.method({
+selector: "localReturnOnDoCatch",
+protocol: 'fixture',
+fn: function (){
+var self=this;
+function $Error(){return $globals.Error||(typeof Error=="undefined"?nil:Error)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $early={};
+try {
+$recv((function(){
+throw $early=[(2)];
+
+}))._on_do_($Error(),(function(){
+
+}));
+return (3);
+}
+catch(e) {if(e===$early)return e[0]; throw e}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"localReturnOnDoCatch",{},$globals.BlockClosureTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "localReturnOnDoCatch\x0a    [ ^ 2 ] on: Error do: [].\x0a    ^ 3",
+referencedClasses: ["Error"],
+//>>excludeEnd("ide");
+messageSends: ["on:do:"]
+}),
+$globals.BlockClosureTest);
+
+$core.addMethod(
+$core.method({
+selector: "localReturnOnDoMiss",
+protocol: 'fixture',
+fn: function (){
+var self=this;
+function $Class(){return $globals.Class||(typeof Class=="undefined"?nil:Class)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $early={};
+try {
+$recv((function(){
+throw $early=[(2)];
+
+}))._on_do_($Class(),(function(){
+
+}));
+return (3);
+}
+catch(e) {if(e===$early)return e[0]; throw e}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"localReturnOnDoMiss",{},$globals.BlockClosureTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "localReturnOnDoMiss\x0a    [ ^ 2 ] on: Class do: [].\x0a    ^ 3",
+referencedClasses: ["Class"],
+//>>excludeEnd("ide");
+messageSends: ["on:do:"]
+}),
+$globals.BlockClosureTest);
+
+$core.addMethod(
+$core.method({
 selector: "testCanClearInterval",
 protocol: 'tests',
 fn: function (){
@@ -614,6 +682,54 @@ source: "testExceptionSemantics\x0a\x09\x22See https://github.com/NicolasPetton/
 referencedClasses: ["Error"],
 //>>excludeEnd("ide");
 messageSends: ["timeout:", "valueWithTimeout:", "async:", "on:do:", "assert:", "signal", "deny:", "finished"]
+}),
+$globals.BlockClosureTest);
+
+$core.addMethod(
+$core.method({
+selector: "testLocalReturnOnDoCatch",
+protocol: 'tests',
+fn: function (){
+var self=this;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+self._assert_equals_(self._localReturnOnDoCatch(),(2));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"testLocalReturnOnDoCatch",{},$globals.BlockClosureTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "testLocalReturnOnDoCatch\x0a\x09self assert: self localReturnOnDoCatch equals: 2",
+referencedClasses: [],
+//>>excludeEnd("ide");
+messageSends: ["assert:equals:", "localReturnOnDoCatch"]
+}),
+$globals.BlockClosureTest);
+
+$core.addMethod(
+$core.method({
+selector: "testLocalReturnOnDoMiss",
+protocol: 'tests',
+fn: function (){
+var self=this;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+self._assert_equals_(self._localReturnOnDoMiss(),(2));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"testLocalReturnOnDoMiss",{},$globals.BlockClosureTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "testLocalReturnOnDoMiss\x0a\x09self assert: self localReturnOnDoMiss equals: 2",
+referencedClasses: [],
+//>>excludeEnd("ide");
+messageSends: ["assert:equals:", "localReturnOnDoMiss"]
 }),
 $globals.BlockClosureTest);
 
@@ -2154,6 +2270,192 @@ referencedClasses: [],
 messageSends: ["assert:equals:", "instanceVariableNamesFor:"]
 }),
 $globals.ClassBuilderTest);
+
+
+
+$core.addClass('ClassTest', $globals.TestCase, ['builder', 'theClass'], 'Kernel-Tests');
+$core.addMethod(
+$core.method({
+selector: "jsConstructor",
+protocol: 'running',
+fn: function (){
+var self=this;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+
+		function Foo(){}
+		Foo.prototype.valueOf = function () {return 4;};
+		return Foo;
+	;
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"jsConstructor",{},$globals.ClassTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "jsConstructor\x0a\x09<\x0a\x09\x09function Foo(){}\x0a\x09\x09Foo.prototype.valueOf = function () {return 4;};\x0a\x09\x09return Foo;\x0a\x09>",
+referencedClasses: [],
+//>>excludeEnd("ide");
+messageSends: []
+}),
+$globals.ClassTest);
+
+$core.addMethod(
+$core.method({
+selector: "setUp",
+protocol: 'running',
+fn: function (){
+var self=this;
+function $ClassBuilder(){return $globals.ClassBuilder||(typeof ClassBuilder=="undefined"?nil:ClassBuilder)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+self["@builder"]=$recv($ClassBuilder())._new();
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"setUp",{},$globals.ClassTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "setUp\x0a\x09builder := ClassBuilder new",
+referencedClasses: ["ClassBuilder"],
+//>>excludeEnd("ide");
+messageSends: ["new"]
+}),
+$globals.ClassTest);
+
+$core.addMethod(
+$core.method({
+selector: "tearDown",
+protocol: 'running',
+fn: function (){
+var self=this;
+function $Smalltalk(){return $globals.Smalltalk||(typeof Smalltalk=="undefined"?nil:Smalltalk)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $1,$receiver;
+$1=self["@theClass"];
+if(($receiver = $1) == null || $receiver.isNil){
+$1;
+} else {
+$recv($Smalltalk())._removeClass_(self["@theClass"]);
+self["@theClass"]=nil;
+self["@theClass"];
+};
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"tearDown",{},$globals.ClassTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "tearDown\x0a\x09theClass ifNotNil: [ Smalltalk removeClass: theClass. theClass := nil ]",
+referencedClasses: ["Smalltalk"],
+//>>excludeEnd("ide");
+messageSends: ["ifNotNil:", "removeClass:"]
+}),
+$globals.ClassTest);
+
+$core.addMethod(
+$core.method({
+selector: "testSetJavaScriptConstructor",
+protocol: 'tests',
+fn: function (){
+var self=this;
+var instance;
+function $ObjectMock(){return $globals.ObjectMock||(typeof ObjectMock=="undefined"?nil:ObjectMock)}
+function $Error(){return $globals.Error||(typeof Error=="undefined"?nil:Error)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $2,$1,$4,$3,$6,$5,$8,$7;
+self["@theClass"]=$recv(self["@builder"])._copyClass_named_($ObjectMock(),"ObjectMock2");
+$recv(self["@theClass"])._javascriptConstructor_(self._jsConstructor());
+$2=$recv(self["@theClass"])._superclass();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["superclass"]=1;
+//>>excludeEnd("ctx");
+$1=$recv($2).__eq_eq($recv($ObjectMock())._superclass());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=1;
+//>>excludeEnd("ctx");
+self._assert_($1);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:"]=1;
+//>>excludeEnd("ctx");
+$4=$recv(self["@theClass"])._instanceVariableNames();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["instanceVariableNames"]=1;
+//>>excludeEnd("ctx");
+$3=$recv($4).__eq_eq($recv($ObjectMock())._instanceVariableNames());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=2;
+//>>excludeEnd("ctx");
+self._assert_($3);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:"]=2;
+//>>excludeEnd("ctx");
+self._assert_equals_($recv(self["@theClass"])._name(),"ObjectMock2");
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:equals:"]=1;
+//>>excludeEnd("ctx");
+$6=$recv(self["@theClass"])._package();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["package"]=1;
+//>>excludeEnd("ctx");
+$5=$recv($6).__eq_eq($recv($ObjectMock())._package());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=3;
+//>>excludeEnd("ctx");
+self._assert_($5);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:"]=3;
+//>>excludeEnd("ctx");
+$8=$recv(self["@theClass"])._methodDictionary();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["methodDictionary"]=1;
+//>>excludeEnd("ctx");
+$7=$recv($8)._keys();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["keys"]=1;
+//>>excludeEnd("ctx");
+self._assert_equals_($7,$recv($recv($ObjectMock())._methodDictionary())._keys());
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:equals:"]=2;
+//>>excludeEnd("ctx");
+instance=$recv(self["@theClass"])._new();
+self._assert_($recv($recv(instance)._class()).__eq_eq(self["@theClass"]));
+self._assert_equals_($recv(instance)._value(),(4));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:equals:"]=3;
+//>>excludeEnd("ctx");
+self._shouldnt_raise_((function(){
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx2) {
+//>>excludeEnd("ctx");
+return $recv(instance)._foo_((9));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)});
+//>>excludeEnd("ctx");
+}),$Error());
+self._assert_equals_($recv(instance)._foo(),(9));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"testSetJavaScriptConstructor",{instance:instance},$globals.ClassTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "testSetJavaScriptConstructor\x0a\x09| instance |\x0a\x09theClass := builder copyClass: ObjectMock named: 'ObjectMock2'.\x0a\x09theClass javascriptConstructor: self jsConstructor.\x0a\x09\x22part took from copy class test\x22\x0a\x09self assert: theClass superclass == ObjectMock superclass.\x0a\x09self assert: theClass instanceVariableNames == ObjectMock instanceVariableNames.\x0a\x09self assert: theClass name equals: 'ObjectMock2'.\x0a\x09self assert: theClass package == ObjectMock package.\x0a\x09self assert: theClass methodDictionary keys equals: ObjectMock methodDictionary keys.\x0a\x09\x22testing specific to late-wrapped class\x22\x0a\x09instance := theClass new.\x0a\x09self assert: instance class == theClass.\x0a\x09self assert: instance value equals: 4.\x0a\x09self shouldnt: [ instance foo: 9 ] raise: Error.\x0a\x09self assert: instance foo equals: 9",
+referencedClasses: ["ObjectMock", "Error"],
+//>>excludeEnd("ide");
+messageSends: ["copyClass:named:", "javascriptConstructor:", "jsConstructor", "assert:", "==", "superclass", "instanceVariableNames", "assert:equals:", "name", "package", "keys", "methodDictionary", "new", "class", "value", "shouldnt:raise:", "foo:", "foo"]
+}),
+$globals.ClassTest);
 
 
 
@@ -8156,45 +8458,6 @@ $globals.StringTest);
 
 $core.addMethod(
 $core.method({
-selector: "testIdentityHash",
-protocol: 'tests',
-fn: function (){
-var self=this;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-return $core.withContext(function($ctx1) {
-//>>excludeEnd("ctx");
-var $1,$2,$4,$3;
-$1="foo"._identityHash();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["identityHash"]=1;
-//>>excludeEnd("ctx");
-$2="foo"._identityHash();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["identityHash"]=2;
-//>>excludeEnd("ctx");
-self._assert_equals_($1,$2);
-$4="foo"._identityHash();
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-$ctx1.sendIdx["identityHash"]=3;
-//>>excludeEnd("ctx");
-$3=$recv($4).__eq("bar"._identityHash());
-self._deny_($3);
-return self;
-//>>excludeStart("ctx", pragmas.excludeDebugContexts);
-}, function($ctx1) {$ctx1.fill(self,"testIdentityHash",{},$globals.StringTest)});
-//>>excludeEnd("ctx");
-},
-//>>excludeStart("ide", pragmas.excludeIdeData);
-args: [],
-source: "testIdentityHash\x0a\x09self assert: 'foo' identityHash equals: 'foo' identityHash.\x0a\x09self deny: ('foo' identityHash = 'bar' identityHash)",
-referencedClasses: [],
-//>>excludeEnd("ide");
-messageSends: ["assert:equals:", "identityHash", "deny:", "="]
-}),
-$globals.StringTest);
-
-$core.addMethod(
-$core.method({
 selector: "testIncludesSubString",
 protocol: 'tests',
 fn: function (){
@@ -9316,6 +9579,167 @@ referencedClasses: ["Transcript", "ConsoleTranscript", "Error"],
 messageSends: ["current", "register:", "new", "shouldnt:raise:", "show:"]
 }),
 $globals.ConsoleTranscriptTest);
+
+
+
+$core.addClass('DateTest', $globals.TestCase, [], 'Kernel-Tests');
+$core.addMethod(
+$core.method({
+selector: "testEquality",
+protocol: 'tests',
+fn: function (){
+var self=this;
+var now;
+function $Date(){return $globals.Date||(typeof Date=="undefined"?nil:Date)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $1,$3,$4,$2,$6,$7,$5,$9,$11,$10,$8;
+now=$recv($Date())._new();
+$1=$recv(now).__eq(now);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["="]=1;
+//>>excludeEnd("ctx");
+self._assert_($1);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:"]=1;
+//>>excludeEnd("ctx");
+$3=now;
+$4=$recv($Date())._fromMilliseconds_((0));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=1;
+//>>excludeEnd("ctx");
+$2=$recv($3).__eq($4);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["="]=2;
+//>>excludeEnd("ctx");
+self._deny_($2);
+$6=$recv($Date())._fromMilliseconds_((12345678));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=2;
+//>>excludeEnd("ctx");
+$7=$recv($Date())._fromMilliseconds_((12345678));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=3;
+//>>excludeEnd("ctx");
+$5=$recv($6).__eq($7);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["="]=3;
+//>>excludeEnd("ctx");
+self._assert_($5);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:"]=2;
+//>>excludeEnd("ctx");
+$9=now;
+$11=$recv(now)._asMilliseconds();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["asMilliseconds"]=1;
+//>>excludeEnd("ctx");
+$10=$recv($Date())._fromMilliseconds_($11);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=4;
+//>>excludeEnd("ctx");
+$8=$recv($9).__eq($10);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["="]=4;
+//>>excludeEnd("ctx");
+self._assert_($8);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["assert:"]=3;
+//>>excludeEnd("ctx");
+self._assert_($recv($recv($Date())._fromMilliseconds_($recv(now)._asMilliseconds())).__eq(now));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"testEquality",{now:now},$globals.DateTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "testEquality\x0a\x09| now |\x0a\x09now := Date new.\x0a\x0a\x09self assert: now = now.\x0a\x0a\x09self deny: now = (Date fromMilliseconds: 0).\x0a\x0a\x09self assert: (Date fromMilliseconds: 12345678) = (Date fromMilliseconds: 12345678).\x0a\x09self assert: now = (Date fromMilliseconds: now asMilliseconds).\x0a\x09self assert: (Date fromMilliseconds: now asMilliseconds) = now",
+referencedClasses: ["Date"],
+//>>excludeEnd("ide");
+messageSends: ["new", "assert:", "=", "deny:", "fromMilliseconds:", "asMilliseconds"]
+}),
+$globals.DateTest);
+
+$core.addMethod(
+$core.method({
+selector: "testIdentity",
+protocol: 'tests',
+fn: function (){
+var self=this;
+var now;
+function $Date(){return $globals.Date||(typeof Date=="undefined"?nil:Date)}
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+return $core.withContext(function($ctx1) {
+//>>excludeEnd("ctx");
+var $1,$3,$4,$2,$6,$7,$5,$9,$11,$10,$8;
+now=$recv($Date())._new();
+$1=$recv(now).__eq_eq(now);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=1;
+//>>excludeEnd("ctx");
+self._assert_($1);
+$3=now;
+$4=$recv($Date())._fromMilliseconds_((0));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=1;
+//>>excludeEnd("ctx");
+$2=$recv($3).__eq_eq($4);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=2;
+//>>excludeEnd("ctx");
+self._deny_($2);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["deny:"]=1;
+//>>excludeEnd("ctx");
+$6=$recv($Date())._fromMilliseconds_((12345678));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=2;
+//>>excludeEnd("ctx");
+$7=$recv($Date())._fromMilliseconds_((12345678));
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=3;
+//>>excludeEnd("ctx");
+$5=$recv($6).__eq_eq($7);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=3;
+//>>excludeEnd("ctx");
+self._deny_($5);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["deny:"]=2;
+//>>excludeEnd("ctx");
+$9=now;
+$11=$recv(now)._asMilliseconds();
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["asMilliseconds"]=1;
+//>>excludeEnd("ctx");
+$10=$recv($Date())._fromMilliseconds_($11);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["fromMilliseconds:"]=4;
+//>>excludeEnd("ctx");
+$8=$recv($9).__eq_eq($10);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["=="]=4;
+//>>excludeEnd("ctx");
+self._deny_($8);
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+$ctx1.sendIdx["deny:"]=3;
+//>>excludeEnd("ctx");
+self._deny_($recv($recv($Date())._fromMilliseconds_($recv(now)._asMilliseconds())).__eq_eq(now));
+return self;
+//>>excludeStart("ctx", pragmas.excludeDebugContexts);
+}, function($ctx1) {$ctx1.fill(self,"testIdentity",{now:now},$globals.DateTest)});
+//>>excludeEnd("ctx");
+},
+//>>excludeStart("ide", pragmas.excludeIdeData);
+args: [],
+source: "testIdentity\x0a\x09| now |\x0a\x09now := Date new.\x0a\x0a\x09self assert: now == now.\x0a\x0a\x09self deny: now == (Date fromMilliseconds: 0).\x0a\x0a\x09self deny: (Date fromMilliseconds: 12345678) == (Date fromMilliseconds: 12345678).\x0a\x09self deny: now == (Date fromMilliseconds: now asMilliseconds).\x0a\x09self deny: (Date fromMilliseconds: now asMilliseconds) == now",
+referencedClasses: ["Date"],
+//>>excludeEnd("ide");
+messageSends: ["new", "assert:", "==", "deny:", "fromMilliseconds:", "asMilliseconds"]
+}),
+$globals.DateTest);
 
 
 

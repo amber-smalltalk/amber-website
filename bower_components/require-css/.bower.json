@@ -16,7 +16,7 @@
   "_resolution": {
     "type": "version",
     "tag": "0.1.8",
-    "commit": "c02e960213d299e4fa9aed9ad195653d9f686786"
+    "commit": "3b1d86858259762e5bb9db72c3df6ea808cd9d6d"
   },
   "_source": "git://github.com/guybedford/require-css.git",
   "_target": "^0.1.2",

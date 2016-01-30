@@ -1,6 +1,6 @@
 {
   "name": "amber",
-  "version": "0.14.3",
+  "version": "0.14.16",
   "description": "An implementation of the Smalltalk language that runs on top of the JS runtime.",
   "homepage": "http://amber-lang.net",
   "keywords": [
@@ -20,19 +20,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/amber-smalltalk/amber.git#0.14.3"
+    "url": "git://github.com/amber-smalltalk/amber.git#0.14.16"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": ">=0.10.0"
   },
   "scripts": {
     "test": "grunt test && cd external && cd amber-cli && npm test && cd .. && cd .."
   },
   "devDependencies": {
-    "amber-dev": "^0.3.0",
     "grunt": "^0.4.0",
     "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jshint": "^0.11.0",
+    "grunt-contrib-requirejs": "^0.4.4",
     "grunt-execute": "^0.2.1",
     "pegjs": "^0.8.0",
     "requirejs": "^2.1.15"

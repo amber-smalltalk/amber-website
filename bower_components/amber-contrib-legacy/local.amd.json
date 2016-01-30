@@ -1,0 +1,14 @@
+{
+  "paths": {
+    "amber/legacy": "src",
+    "amber/legacy/resources": "resources"
+  },
+  "map": {
+    "*": {
+      "00comment": "These are backward compatibility pointers.",
+      "amber-attic/Benchfib": "amber/legacy/Benchfib",
+      "amber-attic/Examples": "amber/legacy/Examples",
+      "amber-attic/IDE": "amber/legacy/IDE"
+    }
+  }
+}

@@ -2,7 +2,9 @@
 
 Mousetrap is a simple library for handling keyboard shortcuts in Javascript.
 
-It is around **1.9kb** minified and gzipped and **3.5kb** minified, has no external dependencies, and has been tested in the following browsers:
+It is licensed under the Apache 2.0 license.
+
+It is around **2kb** minified and gzipped and **4.5kb** minified, has no external dependencies, and has been tested in the following browsers:
 
 - Internet Explorer 6+
 - Safari
@@ -31,7 +33,7 @@ If you would like to donate to help support Mousetrap development use [Gittip](h
         Mousetrap.bind('esc', function() { console.log('escape'); }, 'keyup');
 
         // combinations
-        Mousetrap.bind('command+shift+K', function() { console.log('command shift k'); });
+        Mousetrap.bind('command+shift+k', function() { console.log('command shift k'); });
 
         // map multiple combinations to the same callback
         Mousetrap.bind(['command+k', 'ctrl+k'], function() {
@@ -68,7 +70,7 @@ There are a number of other similar libraries out there so what makes this one d
 
 ## Tests
 
-Unit tests run via <a href="http://visionmedia.github.io/mocha" target="_blank">mocha</a>.
+Unit tests run via <a href="http://mochajs.org/" target="_blank">mocha</a>.
 
 ### Running in browser
 
@@ -97,4 +99,4 @@ Download the repo and go to `tests/mousetrap.html` in your browser.
 
 ## Documentation
 
-Full documentation can be found at http://craig.is/killing/mice
+Full documentation can be found at https://craig.is/killing/mice

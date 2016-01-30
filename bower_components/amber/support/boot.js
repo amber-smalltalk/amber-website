@@ -194,11 +194,9 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 		this.selectors = [];
 		this.jsSelectors = [];
 
-		this.get = function (stSelector) {
+		this.make = function (stSelector, targetClasses) {
 			var method = methodDict[stSelector];
-			if(method) {
-				return method;
-			}
+			if(method) return;
 			var jsSelector = st.st2js(stSelector);
 			this.selectors.push(stSelector);
 			this.jsSelectors.push(jsSelector);
@@ -206,6 +204,9 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 			methodDict[stSelector] = method;
 			methods.push(method);
 			manip.installMethod(method, rootAsClass);
+			targetClasses.forEach(function (target) {
+				manip.installMethod(method, target);
+			});
 			return method;
 		};
 
@@ -244,37 +245,33 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 		function copySuperclass(klass) {
 			var superclass = klass.superclass,
 				localMethods = klass.methods,
-				protectedJsSelectors = {};
+				localMethodsByJsSelector = {};
 			Object.keys(localMethods).forEach(function (each) {
-				protectedJsSelectors[localMethods[each].jsSelector] = true;
+				var localMethod = localMethods[each];
+                localMethodsByJsSelector[localMethod.jsSelector] = localMethod;
 			});
-			var superproto = superclass.fn.prototype;
+			var myproto = klass.fn.prototype,
+				superproto = superclass.fn.prototype;
 			dnu.jsSelectors.forEach(function (selector) {
-				if (!protectedJsSelectors[selector]) {
+				if (!localMethodsByJsSelector[selector]) {
 					manip.installMethod({
 						jsSelector: selector,
 						fn: superproto[selector]
 					}, klass);
+				} else if (!myproto[selector]) {
+					manip.installMethod(localMethodsByJsSelector[selector], klass);
 				}
 			});
 		}
 	}
 
 	function ManipulationBrik(brikz, st) {
-
-		this.installMethodIfAbsent = function (handler, klass) {
-			if(!klass.fn.prototype[handler.jsSelector]) {
-				installMethod(handler, klass);
-			}
-		};
-
-		function installMethod (method, klass) {
+		this.installMethod = function (method, klass) {
 			Object.defineProperty(klass.fn.prototype, method.jsSelector, {
 				value: method.fn,
 				enumerable: false, configurable: true, writable: true
 			});
-		}
-		this.installMethod = installMethod;
+		};
 	}
 
 
@@ -575,13 +572,6 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 			return that;
 		};
 
-		function installNewDnuHandler(newHandler) {
-			var wrappedClasses = st.wrappedClasses();
-			for(var i = 0; i < wrappedClasses.length; i++) {
-				manip.installMethodIfAbsent(newHandler, wrappedClasses[i]);
-			}
-		}
-
 		function ensureJsSelector(method) {
 			if (!(method.jsSelector)) {
 				method.jsSelector = st.st2js(method.selector);
@@ -602,19 +592,13 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 
 			propagateMethodChange(klass, method);
 
-			var usedSelectors = method.messageSends;
-			var dnuHandlers = [];
+			var usedSelectors = method.messageSends,
+				targetClasses = stInit.initialized() ? st.wrappedClasses() : [];
 
-			dnuHandlers.push(dnu.get(method.selector));
+			dnu.make(method.selector, targetClasses);
 
 			for(var i=0; i<usedSelectors.length; i++) {
-				dnuHandlers.push(dnu.get(usedSelectors[i]));
-			}
-
-			if(stInit.initialized()) {
-				dnuHandlers.forEach(function(each) {
-					installNewDnuHandler(each);
-				});
+				dnu.make(usedSelectors[i], targetClasses);
 			}
 		};
 
@@ -771,12 +755,12 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 
 		/* Boolean assertion */
 		st.assert = function(shouldBeBoolean) {
-			// jshint -W041
-			if (undefined !== shouldBeBoolean && shouldBeBoolean.klass === globals.Boolean) {
-				return shouldBeBoolean == true;
-			} else {
-				globals.NonBooleanReceiver._new()._object_(shouldBeBoolean)._signal();
+			if (typeof shouldBeBoolean === "boolean") return shouldBeBoolean;
+			else if (shouldBeBoolean != null && typeof shouldBeBoolean === "object") {
+				shouldBeBoolean = shouldBeBoolean.valueOf();
+				if (typeof shouldBeBoolean === "boolean") return shouldBeBoolean;
 			}
+			globals.NonBooleanReceiver._new()._object_(shouldBeBoolean)._signal();
 		};
 
 		/* List of all reserved words in JavaScript. They may not be used as variables
@@ -798,7 +782,7 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 							'implements', 'interface', 'let', 'package', 'private', 'protected',
 							'public', 'static', 'yield'];
 
-		st.globalJsVariables = ['jQuery', 'window', 'document', 'process', 'global'];
+		st.globalJsVariables = ['window', 'document', 'process', 'global'];
 
 	}
 
@@ -869,28 +853,33 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 		 Use smalltalk.getThisContext() instead which will answer a safe copy of
 		 the current context */
 
-		st.thisContext = undefined;
+		var thisContext = null;
 
 		st.withContext = function(worker, setup) {
-			if(st.thisContext) {
+			if(thisContext) {
 				return inContext(worker, setup);
 			} else {
-				try {
-					return inContext(worker, setup);
-				} catch(error) {
-					handleError(error);
-					st.thisContext = null;
-					// Rethrow the error in any case.
-					error.amberHandled = true;
-					throw error;
-				}
+				return inContextWithErrorHandling(worker, setup);
 			}
 		};
 
+		function inContextWithErrorHandling(worker, setup) {
+			try {
+				return inContext(worker, setup);
+			} catch (error) {
+				handleError(error);
+				thisContext = null;
+				// Rethrow the error in any case.
+				error.amberHandled = true;
+				throw error;
+			}
+		}
+
 		function inContext(worker, setup) {
-			var context = pushContext(setup);
-			var result = worker(context);
-			popContext(context);
+			var oldContext = thisContext;
+			thisContext = new SmalltalkMethodContext(thisContext, setup);
+			var result = worker(thisContext);
+			thisContext = oldContext;
 			return result;
 		}
 
@@ -943,23 +932,13 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 		/* Handle thisContext pseudo variable */
 
 		st.getThisContext = function() {
-			if(st.thisContext) {
-				st.thisContext.init();
-				return st.thisContext;
+			if(thisContext) {
+				thisContext.init();
+				return thisContext;
 			} else {
 				return nil;
 			}
 		};
-
-		function pushContext(setup) {
-			var newContext = st.thisContext = new SmalltalkMethodContext(st.thisContext, setup);
-			return newContext;
-		}
-
-		function popContext(context) {
-			st.thisContext = context.homeContext;
-		}
-
 	}
 
 	function MessageSendBrik(brikz, st) {
@@ -972,7 +951,7 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 
 		st.send = function(receiver, jsSelector, args, klass) {
 			var method;
-			if(receiver === null) {
+			if(receiver == null) {
 				receiver = nil;
 			}
 			method = klass ? klass.fn.prototype[jsSelector] : receiver.klass && receiver[jsSelector];
@@ -995,7 +974,7 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 		 if the receiver has no klass, we consider it a JS object (outside of the
 		 Amber system). Else assume that the receiver understands #doesNotUnderstand: */
 		function messageNotUnderstood(receiver, stSelector, args) {
-			if (receiver.klass !== undefined && !receiver.allowJavaScriptCalls) {
+			if (receiver.klass != null && !receiver.allowJavaScriptCalls) {
 				return invokeDnuMethod(receiver, stSelector, args);
 			}
 			/* Call a method of a JS object, or answer a property if it exists.
@@ -1118,9 +1097,15 @@ define("amber/boot", [ 'require', './browser-compatibility' ], function (require
 		 * otherwise unchanged
 		 */
 		this.asReceiver = function (o) {
-			if (o == null) { return nil; }
-			if (o.klass) { return o; }
-			return globals.JSObjectProxy._on_(o);
+			if (o == null) return nil;
+			if (typeof o === "object" || typeof o === "function") {
+				return o.klass != null ? o : globals.JSObjectProxy._on_(o);
+			}
+			// IMPORTANT: This optimization (return o if typeof !== "object")
+			// assumes all primitive types are wrapped by some Smalltalk class
+			// so they can be returned as-is, without boxing and looking for .klass.
+			// KEEP THE primitives-are-wrapped INVARIANT!
+			return o;
 		};
 	}
 

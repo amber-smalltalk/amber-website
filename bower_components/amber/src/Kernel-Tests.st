@@ -90,6 +90,18 @@ TestCase subclass: #BlockClosureTest
 	instanceVariableNames: ''
 	package: 'Kernel-Tests'!
 
+!BlockClosureTest methodsFor: 'fixture'!
+
+localReturnOnDoCatch
+    [ ^ 2 ] on: Error do: [].
+    ^ 3
+!
+
+localReturnOnDoMiss
+    [ ^ 2 ] on: Class do: [].
+    ^ 3
+! !
+
 !BlockClosureTest methodsFor: 'tests'!
 
 testCanClearInterval
@@ -134,6 +146,14 @@ testExceptionSemantics
 			self finished.
 		] on: Error do: [ :ex | self finished ]
 	]) valueWithTimeout: 0
+!
+
+testLocalReturnOnDoCatch
+	self assert: self localReturnOnDoCatch equals: 2
+!
+
+testLocalReturnOnDoMiss
+	self assert: self localReturnOnDoMiss equals: 2
 !
 
 testNewWithValues
@@ -405,6 +425,48 @@ testClassMigrationWithSubclasses
 
 testInstanceVariableNames
 	self assert: (builder instanceVariableNamesFor: '  hello   world   ') equals: #('hello' 'world')
+! !
+
+TestCase subclass: #ClassTest
+	instanceVariableNames: 'builder theClass'
+	package: 'Kernel-Tests'!
+
+!ClassTest methodsFor: 'running'!
+
+jsConstructor
+	<
+		function Foo(){}
+		Foo.prototype.valueOf = function () {return 4;};
+		return Foo;
+	>
+!
+
+setUp
+	builder := ClassBuilder new
+!
+
+tearDown
+	theClass ifNotNil: [ Smalltalk removeClass: theClass. theClass := nil ]
+! !
+
+!ClassTest methodsFor: 'tests'!
+
+testSetJavaScriptConstructor
+	| instance |
+	theClass := builder copyClass: ObjectMock named: 'ObjectMock2'.
+	theClass javascriptConstructor: self jsConstructor.
+	"part took from copy class test"
+	self assert: theClass superclass == ObjectMock superclass.
+	self assert: theClass instanceVariableNames == ObjectMock instanceVariableNames.
+	self assert: theClass name equals: 'ObjectMock2'.
+	self assert: theClass package == ObjectMock package.
+	self assert: theClass methodDictionary keys equals: ObjectMock methodDictionary keys.
+	"testing specific to late-wrapped class"
+	instance := theClass new.
+	self assert: instance class == theClass.
+	self assert: instance value equals: 4.
+	self shouldnt: [ instance foo: 9 ] raise: Error.
+	self assert: instance foo equals: 9
 ! !
 
 TestCase subclass: #CollectionTest
@@ -1458,11 +1520,6 @@ testIdentity
 	self deny: '' == 0
 !
 
-testIdentityHash
-	self assert: 'foo' identityHash equals: 'foo' identityHash.
-	self deny: ('foo' identityHash = 'bar' identityHash)
-!
-
 testIncludesSubString
 	self assert: ('amber' includesSubString: 'ber').
 	self deny: ('amber' includesSubString: 'zork').
@@ -1675,6 +1732,38 @@ self shouldnt: [ Transcript show: 'Hello console!!' ] raise: Error.
 self shouldnt: [ Transcript show: console ] raise: Error.
 
 Transcript register: originalTranscript.
+! !
+
+TestCase subclass: #DateTest
+	instanceVariableNames: ''
+	package: 'Kernel-Tests'!
+
+!DateTest methodsFor: 'tests'!
+
+testEquality
+	| now |
+	now := Date new.
+
+	self assert: now = now.
+
+	self deny: now = (Date fromMilliseconds: 0).
+
+	self assert: (Date fromMilliseconds: 12345678) = (Date fromMilliseconds: 12345678).
+	self assert: now = (Date fromMilliseconds: now asMilliseconds).
+	self assert: (Date fromMilliseconds: now asMilliseconds) = now
+!
+
+testIdentity
+	| now |
+	now := Date new.
+
+	self assert: now == now.
+
+	self deny: now == (Date fromMilliseconds: 0).
+
+	self deny: (Date fromMilliseconds: 12345678) == (Date fromMilliseconds: 12345678).
+	self deny: now == (Date fromMilliseconds: now asMilliseconds).
+	self deny: (Date fromMilliseconds: now asMilliseconds) == now
 ! !
 
 TestCase subclass: #JSObjectProxyTest

@@ -404,7 +404,7 @@ isUnknownVar
 ! !
 
 NodeVisitor subclass: #SemanticAnalyzer
-	instanceVariableNames: 'currentScope blockIndex theClass classReferences messageSends superSends'
+	instanceVariableNames: 'currentScope blockIndex thePackage theClass classReferences messageSends superSends'
 	package: 'Compiler-Semantic'!
 !SemanticAnalyzer commentStamp!
 I semantically analyze the abstract syntax tree and annotate it with informations such as non local returns and variable scopes.!
@@ -429,6 +429,14 @@ theClass
 
 theClass: aClass
 	theClass := aClass
+!
+
+thePackage
+	^ thePackage
+!
+
+thePackage: aPackage
+	thePackage := aPackage
 ! !
 
 !SemanticAnalyzer methodsFor: 'error handling'!
@@ -442,7 +450,7 @@ errorShadowingVariable: aString
 errorUnknownVariable: aNode
 	"Throw an error if the variable is undeclared in the global JS scope (i.e. window).
 	We allow all variables listed by Smalltalk>>#globalJsVariables.
-	This list includes: `jQuery`, `window`, `document`,  `process` and `global`
+	This list includes: `window`, `document`,  `process` and `global`
 	for nodejs and browser environments.
 	
 	This is only to make sure compilation works on both browser-based and nodejs environments.
@@ -452,7 +460,7 @@ errorUnknownVariable: aNode
 	identifier := aNode value.
 	
 	((Smalltalk globalJsVariables includes: identifier) not
-		and: [ self isVariableGloballyUndefined: identifier ])
+		and: [ self isVariableUndefined: identifier inPackage: self thePackage ])
 			ifTrue: [
 				UnknownVariableError new
 					variableName: aNode value;
@@ -507,8 +515,15 @@ validateVariableScope: aString
 
 !SemanticAnalyzer methodsFor: 'testing'!
 
-isVariableGloballyUndefined: aString
-	<return eval('typeof ' + aString + ' == "undefined"')>
+isVariableUndefined: aString inPackage: aPackage
+	aPackage ifNotNil: [
+		| packageKnownVars |
+		packageKnownVars := (aPackage imports
+			reject: #isString)
+			collect: #key.
+		(packageKnownVars includes: aString) ifTrue: [ ^ false ]].
+	^ Compiler new
+		eval: 'typeof ', aString, ' == "undefined"'
 ! !
 
 !SemanticAnalyzer methodsFor: 'visiting'!

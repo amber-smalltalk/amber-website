@@ -1,4 +1,4 @@
-define("amber_core/Kernel-Exceptions", ["amber/boot", "amber_core/Kernel-Objects"], function($boot){
+define("amber_core/Kernel-Exceptions", ["amber/boot", "amber_core/Kernel-Objects"], function($boot){"use strict";
 var $core=$boot.api,nil=$boot.nil,$recv=$boot.asReceiver,$globals=$boot.globals;
 $core.addPackage('Kernel-Exceptions');
 $core.packages["Kernel-Exceptions"].innerEval = function (expr) { return eval(expr); };
@@ -831,11 +831,5 @@ messageSends: []
 }),
 $globals.NonBooleanReceiver);
 
-
-
-$core.addClass('PackageCommitError', $globals.Error, [], 'Kernel-Exceptions');
-//>>excludeStart("ide", pragmas.excludeIdeData);
-$globals.PackageCommitError.comment="I get signaled when an attempt to commit a package has failed.";
-//>>excludeEnd("ide");
 
 });

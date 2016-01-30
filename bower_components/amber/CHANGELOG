@@ -1,4 +1,88 @@
-?? January 2015 - Release 0.14.3
+20 June 2015 - Release 0.14.16
+===================================
+
+Bugfix release - Date >> =, Class >> javascriptConstructor:.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.15...0.14.16
+
+
+9 June 2015 - Release 0.14.15
+===================================
+
+Bugfix release - in some browsers, package commit failed.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.14...0.14.15
+
+
+24 May 2015 - Release 0.14.14
+===================================
+
+Highlights:
+
+* Extraction of `Web` and `Wrappers-JQuery` to own repos.
+* Amber core itself formally with no production dependencies.
+* Packages with 'use strict'.
+* `PlatformInterface` replaced by services `Terminal` and `Platform`.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.13...0.14.14
+
+
+29 March 2015 - Release 0.14.13
+===================================
+
+Highlights:
+
+* Rename namespaces of `Web` and `Wrappers-JQuery`.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.12...0.14.13
+
+
+22 February 2015 - Release 0.14.12
+===================================
+
+Highlights:
+
+* Wrapped JS object can be put on streams via aStream << anObject.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.11...0.14.12
+
+
+21 February 2015 - Release 0.14.11
+===================================
+
+Highlights:
+
+* `anObject in: aBlock` added
+* ProtoStream with extracted basic streaming protocol.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.10...0.14.11
+
+
+17 February 2015 - Release 0.14.10
+===================================
+
+Highlights:
+
+* Package renames, classes moved between packages:
+  * Web and Wrappers-JQuery in amber-contrib-xxx namespaces,
+  * Platform-Xxx packages to keep Kernel-Xxx to kernel.
+* Some core speedups.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.4...0.14.10
+
+
+1 February 2015 - Release 0.14.4
+===================================
+
+Highlights:
+
+* Compiler now allows the "import them as package-global vars" of 0.14.3.
+* Some core speedups.
+
+Commits: https://github.com/amber-smalltalk/amber/compare/0.14.3...0.14.4
+
+
+20 January 2015 - Release 0.14.3
 ===================================
 
 Highlights:

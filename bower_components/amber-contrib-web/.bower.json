@@ -1,0 +1,44 @@
+{
+  "name": "amber-contrib-web",
+  "version": "0.2.0",
+  "homepage": "https://github.com/amber-smalltalk/amber-contrib-web",
+  "description": "Amber Smalltalk's original Seaside-inspired DOM manipulation library",
+  "main": "local.amd.json",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "amber",
+    "smalltalk",
+    "dom",
+    "seaside"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/*.js",
+    "/*.html",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "amber": "*",
+    "amber-contrib-jquery": ">=0.1.0"
+  },
+  "devDependencies": {
+    "amber-ide-starter-dialog": "^0.1.0",
+    "amber-contrib-legacy": "^0.2.0",
+    "helios": ">=0.4.3"
+  },
+  "_release": "0.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.0",
+    "commit": "b9359d309c80b6320588ba98e865ad826cdb0ef5"
+  },
+  "_source": "git://github.com/amber-smalltalk/amber-contrib-web.git",
+  "_target": ">=0.1.0",
+  "_originalSource": "amber-contrib-web"
+}
